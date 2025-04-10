@@ -1,11 +1,7 @@
-// framework/core/reactive-element.js
 export class ReactiveElement extends HTMLElement {
   constructor() {
     super();
-    this.state = MyModel.get();//{};
-    this._prevTemplate = null;
-
-    // Make state reactive
+    this.state = MyModel.get();
     this._reactiveState = new Proxy(this.state, {
       set: (target, prop, value) => {
         target[prop] = value;
@@ -27,56 +23,31 @@ export class ReactiveElement extends HTMLElement {
     return this._reactiveState;
   }
 
-  // Must be implemented in subclasses
+  // Must be implemented by subclasses
   template(state) {
     return '';
   }
 
   update() {
     const templateHtml = this.template(this._reactiveState);
-    const newTemplate = document.createElement('template');
-    newTemplate.innerHTML = templateHtml;
-    //this.innerHTML = templateHtml;
-    this._diffAndPatch(this, newTemplate.content);
-    //this.innerHTML = newTemplate.innerHTML;
+
+    // Use a <div> wrapper to safely parse and render content
+    const container = document.createElement('div');
+    container.innerHTML = templateHtml;
+
+    // Replace entire inner content
+    this.replaceChildren(...container.childNodes);
+
+    // Force upgrade custom elements manually
+    this._upgradeCustomElements(this);
   }
 
-  _diffAndPatch(current, next) {
-    const currentNodes = Array.from(current.childNodes);
-    const nextNodes = Array.from(next.childNodes);
-
-    for (let i = 0; i < nextNodes.length; i++) {
-      const c = currentNodes[i];
-      const n = nextNodes[i];
-
-      if (!c) {
-        current.appendChild(n.cloneNode(true));
-        continue;
+  _upgradeCustomElements(root) {
+    for (const el of root.querySelectorAll('*')) {
+      const tag = el.tagName.toLowerCase();
+      if (tag.includes('-') && customElements.get(tag)) {
+        customElements.upgrade(el);
       }
-
-      if (c.nodeType === Node.TEXT_NODE && n.nodeType === Node.TEXT_NODE) {
-        if (c.textContent !== n.textContent) c.textContent = n.textContent;
-      } else if (c.nodeName === n.nodeName) {
-        // Patch attributes
-        Array.from(n.attributes || []).forEach(attr => {
-          if (c.getAttribute(attr.name) !== attr.value)
-            c.setAttribute(attr.name, attr.value);
-        });
-
-        // Remove extra attributes
-        Array.from(c.attributes || []).forEach(attr => {
-          if (!n.hasAttribute(attr.name)) c.removeAttribute(attr.name);
-        });
-
-        // Recurse
-        this._diffAndPatch(c, n);
-      } else {
-        current.replaceChild(n.cloneNode(true), c);
-      }
-    }
-
-    for (let i = nextNodes.length; i < currentNodes.length; i++) {
-      current.removeChild(currentNodes[i]);
     }
   }
 }

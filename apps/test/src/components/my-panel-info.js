@@ -5,6 +5,7 @@ export class MyPanelInfo extends MyPanel {
         return `
         <div>Name: ${state.name || ""}</div>
         <div>Surname: ${state.surname || ""}</div>
+        <my-button></my-button>
         `
     }
 }
