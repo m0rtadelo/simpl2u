@@ -9,6 +9,5 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "rxjs": "^7.8.2"
   }
 }
