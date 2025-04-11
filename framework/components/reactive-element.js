@@ -1,5 +1,7 @@
-export class ReactiveElement extends HTMLElement {
-  constructor() {
+import { Element } from "./element.js";
+
+export class ReactiveElement extends Element {
+  constructor() { 
     super();
     this.state = MyModel.get();
     this._reactiveState = new Proxy(this.state, {
@@ -11,7 +13,7 @@ export class ReactiveElement extends HTMLElement {
     });
     MyModel.subscribe(model => {
       this.setState(model);
-  });
+    });
 
   }
 
@@ -27,14 +29,7 @@ export class ReactiveElement extends HTMLElement {
     return this._reactiveState;
   }
 
-  // Must be implemented by subclasses
-  template(state) {
-    return '';
-  }
-
-  // Must be implemented by subclasses
-  addEventListeners() {}
-
+/*
   setEventListener(id, event, callback) {
     Promise.resolve().then(() => {
       const element = this.querySelector('#' + id);
@@ -45,7 +40,7 @@ export class ReactiveElement extends HTMLElement {
       }
     });
   }
-
+*/
   update() {
     const templateHtml = this.template(this._reactiveState);
 
