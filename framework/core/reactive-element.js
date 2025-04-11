@@ -1,9 +1,9 @@
 import { Element } from "./element.js";
-
+import { MyModel } from "../models/my-model.js";
 export class ReactiveElement extends Element {
   constructor() { 
     super();
-    this.state = MyModel.get();
+    this.state = MyModel.get(undefined, this.context);
     this._reactiveState = new Proxy(this.state, {
       set: (target, prop, value) => {
         target[prop] = value;
@@ -12,7 +12,7 @@ export class ReactiveElement extends Element {
       }
     });
     MyModel.subscribe(model => {
-      this.setState(model);
+      this.setState(model[this.context]);
     });
 
   }

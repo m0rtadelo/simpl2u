@@ -1,5 +1,5 @@
 export class Element extends HTMLElement {
-  modelKey = '';
+  context = this.getAttribute("context");
   setEventListener(id, event, callback) {
     Promise.resolve().then(() => {
       const element = this.querySelector('#' + id);

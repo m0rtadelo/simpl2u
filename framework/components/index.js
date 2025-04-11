@@ -1,3 +1,2 @@
-import "./button/my-button.js";
-import "./input/my-input.js";
-import "./panel/my-panel.js";
+import "./my-button.js";
+import "./my-input.js";

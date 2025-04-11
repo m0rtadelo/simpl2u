@@ -4,8 +4,8 @@ const path = require('path');
 //import { MyButton } from '../../framework/components/button/my-button';
 function createWindow() {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1100,
+    height: 800,
     webPreferences: {
       //preload: path.join(__dirname, 'renderer.js'),
       openDevTools: true,

@@ -1,4 +1,4 @@
-import { ReactiveElement } from "../../../../framework/components/reactive-element.js";
+import { ReactiveElement } from "../../../../framework/core/reactive-element.js";
 
 export class MyPanelInfo extends ReactiveElement {
   text = this.getAttribute('text');

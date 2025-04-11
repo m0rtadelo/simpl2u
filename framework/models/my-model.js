@@ -1,38 +1,33 @@
-/*
 export class MyModel {
     static #model = {};
-    static get(id) {
-        if (id && !MyModel.#model[id])
-            MyModel.#model[id] = {};
-        return id ? MyModel.#model[id] : MyModel.#model;
-    }
-
-    static set(value, id) {
-        if (id) {
-            MyModel.#model[id] = value;
-        }
-    }
-}
-*/
-
-export class MyModel {
-    static #model = {};
-    static #last = '';
     static #subscribers = new Set(); // Store all subscriber functions
   
-    static get(id) {
-        MyModel.#last = JSON.stringify(MyModel.#model);
-      if (id && !MyModel.#model[id]) {
-        MyModel.#model[id] = {};
+    static #setContext(context) {
+      if (context && !MyModel.#model[context])
+        MyModel.#model[context] = {};
+    }
+
+    static data() {
+      return MyModel.#model;
+    }
+    
+    static get(id, context = 'global') {
+      this.#setContext(context);
+      //if (context && !MyModel.#model[context])
+      //  MyModel.#model[context] = {};
+      if (id && !MyModel.#model[context][id]) {
+        MyModel.#model[context][id] = "";
       }
       //MyModel.#notify();
-      return id ? MyModel.#model[id] : MyModel.#model;
+      return id ? MyModel.#model[context][id] : MyModel.#model[context];
     }
   
-    static set(value, id) {
-        MyModel.#last = JSON.stringify(MyModel.#model);
+    static set(value, id, context = 'global') {
+      this.#setContext(context);
       if (id) {
-        MyModel.#model[id] = value;
+        MyModel.#model[context][id] = value;
+      } else {
+        MyModel.#model[context] = value;
       }
       MyModel.#notify(); // Notify all subscribers
     }
@@ -51,12 +46,13 @@ export class MyModel {
         callback(MyModel.#model);
       }
     }
-
+/*
     static parse(text) {
         Object.keys(MyModel.#model).forEach((key) => {
             text = text.split('$'+key).join(MyModel.#model[key] || "");
         });
         return text;
     }
+        */
   }
   

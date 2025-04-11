@@ -1,4 +1,6 @@
 import { MyApp } from "./components/my-app.js";
 import { MyPanelInfo } from "./components/my-panel-info.js";
-window.MyApp = MyApp;
-window.MyPanelInfo = MyPanelInfo;
+import { MyForm } from "./components/my-form.js";
+//window.MyApp = MyApp;
+//window.MyPanelInfo = MyPanelInfo;
+//window.MyForm = MyForm;
