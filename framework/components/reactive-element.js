@@ -9,6 +9,10 @@ export class ReactiveElement extends HTMLElement {
         return true;
       }
     });
+    MyModel.subscribe(model => {
+      this.setState(model);
+  });
+
   }
 
   connectedCallback() {
@@ -28,6 +32,20 @@ export class ReactiveElement extends HTMLElement {
     return '';
   }
 
+  // Must be implemented by subclasses
+  addEventListeners() {}
+
+  setEventListener(id, event, callback) {
+    Promise.resolve().then(() => {
+      const element = this.querySelector('#' + id);
+      if (element) {
+        element.removeEventListener(event, this.buttonBound);
+        this.buttonBound = callback.bind(this);
+        element.addEventListener(event, this.buttonBound);
+      }
+    });
+  }
+
   update() {
     const templateHtml = this.template(this._reactiveState);
 
@@ -40,6 +58,9 @@ export class ReactiveElement extends HTMLElement {
 
     // Force upgrade custom elements manually
     this._upgradeCustomElements(this);
+
+    // Add listeners
+    this.addEventListeners();
   }
 
   _upgradeCustomElements(root) {

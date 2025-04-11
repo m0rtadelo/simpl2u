@@ -1,6 +1,7 @@
-import { MyPanel } from "../../../../framework/components/panel/my-panel.js";
+import { ReactiveElement } from "../../../../framework/components/reactive-element.js";
 
-export class MyPanelInfo extends MyPanel {
+export class MyPanelInfo extends ReactiveElement {
+  text = this.getAttribute('text');
     template(state) {
         return `
         <div>Name: ${state.name || ""}</div>
@@ -9,21 +10,13 @@ export class MyPanelInfo extends MyPanel {
         `
     }
 
+    addEventListeners() {
+      this.setEventListener('myButton', 'click', this.button);
+    }
+  
     button() {
         console.log('clicked!!');
-        alert('clicked');
+        alert('clicked ' + this.text);
     }
-
-    connectedCallback() {
-        super.connectedCallback();
-        Promise.resolve().then(() => {
-          const btn = this.querySelector('#myButton');
-          if (btn) {
-            btn.removeEventListener('click', this.buttonBound);
-            this.buttonBound = this.button.bind(this);
-            btn.addEventListener('click', this.buttonBound);
-          }
-        });
-      }    
 }
 customElements.define('my-panel-info', MyPanelInfo);
