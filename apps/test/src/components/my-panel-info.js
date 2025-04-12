@@ -2,10 +2,10 @@ import { ReactiveElement } from '../../../../framework/core/reactive-element.js'
 
 export class MyPanelInfo extends ReactiveElement {
   text = this.getAttribute('text');
-  template(state) {
+  template(state, u) {
     return `
-        <div>${i18n('name')}: ${state.name || ''}</div>
-        <div>${i18n('surname')}: ${state.surname || ''}</div>
+        <div>${u.i18n('name')}: ${state.name || ''}</div>
+        <div>${u.i18n('surname')}: ${state.surname || ''}</div>
         <my-button id="myButton""></my-button>
         `;
   }

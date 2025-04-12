@@ -6,6 +6,9 @@ export class Element extends HTMLElement {
   context = this.getAttribute("context");
   static loaded = false;
   static #done;
+  utils = {
+    i18n: LanguageService.i18n,
+  }
   constructor() {
     super();
     if (!Element.#done) {
@@ -36,7 +39,7 @@ export class Element extends HTMLElement {
   addEventListeners() { }
 
   render() {
-    this.innerHTML = this.template(this.state);
+    this.innerHTML = this.template(this.state, this.utils);
   }
 }
 

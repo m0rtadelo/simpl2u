@@ -42,7 +42,7 @@ export class ReactiveElement extends Element {
   }
 */
   update() {
-    const templateHtml = this.template(this._reactiveState);
+    const templateHtml = this.template(this._reactiveState, this.utils);
 
     // Use a <div> wrapper to safely parse and render content
     const container = document.createElement('div');

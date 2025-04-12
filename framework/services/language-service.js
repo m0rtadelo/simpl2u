@@ -35,11 +35,7 @@ export class LanguageService {
         LanguageService.#languages = languages;
     }
 
-    static t(key) {
+    static i18n(key) {
         return LanguageService.#languages?.[LanguageService.#lang]?.[key] || key;
     }
-}
-
-function t(key) {
-    return LanguageService.t(key);
 }
