@@ -1,5 +1,6 @@
 import { StaticElement } from "../core/static-element.js";
 import { MyModel } from "../models/my-model.js";
+import { LanguageService } from "../services/language-service.js";
 export class MyInput extends StaticElement {
   name = this.getAttribute("name");
   label = this.getAttribute("label") || this.name;
@@ -7,7 +8,7 @@ export class MyInput extends StaticElement {
   template(state) {
     return `
       <label for="${this.name}" class="form-label col-12">${this.label}</form>
-      <input id="${this.name}" class="form-control col-12" type="text" value="${MyModel.get(this.name, this.context) || ""}"></input>
+      <input autofocus="true" id="${this.name}" class="form-control col-12" type="text" value="${MyModel.get(this.name, this.context) || ""}"></input>
     `;
   }
 

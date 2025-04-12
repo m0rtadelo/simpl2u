@@ -52,13 +52,13 @@ export class ReactiveElement extends Element {
     this.replaceChildren(...container.childNodes);
 
     // Force upgrade custom elements manually
-    this._upgradeCustomElements(this);
+    this.#upgradeCustomElements(this);
 
     // Add listeners
     this.addEventListeners();
   }
 
-  _upgradeCustomElements(root) {
+  #upgradeCustomElements(root) {
     for (const el of root.querySelectorAll('*')) {
       const tag = el.tagName.toLowerCase();
       if (tag.includes('-') && customElements.get(tag)) {

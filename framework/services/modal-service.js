@@ -1,0 +1,67 @@
+export class ModalService {
+    static modalId = 'myBootstrapModal';
+    static async message(text, title = "Message") {
+        return this.#handleModal(`
+        <div class="modal fade" id="${this.modalId}" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">${title}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                ${text}
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="${this.modalId}_click_yes" >Close</button>
+              </div>
+            </div>
+          </div>
+        </div>        
+            `);
+    }
+  
+    static async confirm(text, title = "Confirm") {
+        return this.#handleModal(`
+        <div class="modal fade" id="${this.modalId}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">${title}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                ${text}
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" id="${this.modalId}_click_yes" >Yes</button>
+              </div>
+            </div>
+          </div>
+        </div>        
+            `);
+    }
+
+    static async #handleModal(modal) {
+        this.#deleteModal();
+        document.body.insertAdjacentHTML('beforeend', modal);
+        var myModal = new bootstrap.Modal(document.getElementById(this.modalId), {});
+        myModal.show();
+        var result = false;
+        return new Promise((resolve, reject) => {
+            document.getElementById(this.modalId).addEventListener('hidden.bs.modal', () => {
+                resolve(result);
+              })
+            document.getElementById(this.modalId + '_click_yes').addEventListener('click', () => {
+                result = true;
+                myModal.hide();
+            });
+        });
+    }
+
+    static #deleteModal() {
+        const modalElement = document.getElementById(this.modalId);
+        modalElement?.remove();
+    }
+}

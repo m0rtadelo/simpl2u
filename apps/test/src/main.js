@@ -1,13 +1,17 @@
-const { app, BrowserWindow } = require('electron');
+/* eslint-disable no-undef */
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
-//const MyButton = require('../../framework/components/index');
-//import { MyButton } from '../../framework/components/button/my-button';
+
+ipcMain.handle('get-locale', () => {
+  return app.getLocale(); // e.g., "en-US"
+});
+
 function createWindow() {
   const win = new BrowserWindow({
     width: 1100,
     height: 800,
     webPreferences: {
-      //preload: path.join(__dirname, 'renderer.js'),
+      preload: path.join(__dirname, 'preload.js'),
       openDevTools: true,
     }
   });

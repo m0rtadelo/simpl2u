@@ -10,20 +10,7 @@ export class StaticElement extends Element {
     }
   }
   connectedCallback() {
-    this.innerHTML = this.template(this.state);
+    this.render();
     this.addEventListeners();
   }
-
-/*
-  setEventListener(id, event, callback) {
-    Promise.resolve().then(() => {
-      const element = this.querySelector('#' + id);
-      if (element) {
-        element.removeEventListener(event, this.buttonBound);
-        this.buttonBound = callback.bind(this);
-        element.addEventListener(event, this.buttonBound);
-      }
-    });
-  }
-*/
 }

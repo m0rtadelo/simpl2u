@@ -4,8 +4,8 @@ export class MyPanelInfo extends ReactiveElement {
   text = this.getAttribute('text');
     template(state) {
         return `
-        <div>Name: ${state.name || ""}</div>
-        <div>Surname: ${state.surname || ""}</div>
+        <div>${i18n("name")}: ${state.name || ""}</div>
+        <div>${i18n("surname")}: ${state.surname || ""}</div>
         <my-button id="myButton""></my-button>
         `
     }
