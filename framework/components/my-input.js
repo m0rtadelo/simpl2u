@@ -1,6 +1,6 @@
 import { StaticElement } from "../core/static-element.js";
 import { MyModel } from "../models/my-model.js";
-import { LanguageService } from "../services/language-service.js";
+
 export class MyInput extends StaticElement {
   name = this.getAttribute("name");
   label = this.getAttribute("label") || this.name;

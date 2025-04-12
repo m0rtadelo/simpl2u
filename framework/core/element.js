@@ -27,14 +27,12 @@ export class Element extends HTMLElement {
    * @param {*} callback function to execute in event (avoid arrow functions)
    */
   setEventListener(id, event, callback) {
-    Promise.resolve().then(() => {
-      const element = this.querySelector('#' + id);
-      if (element) {
-        element.removeEventListener(event, this.buttonBound);
-        this.buttonBound = callback.bind(this);
-        element.addEventListener(event, this.buttonBound);
-      }
-    });
+    const element = this.querySelector('#' + id);
+    if (element) {
+      element.removeEventListener(event, this.buttonBound);
+      this.buttonBound = callback.bind(this);
+      element.addEventListener(event, this.buttonBound);
+    }
   }
 
   /**

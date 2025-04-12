@@ -1,19 +1,22 @@
+import { LanguageService } from "./language-service.js";
+
 export class ModalService {
   static modalId = 'myBootstrapModal';
-  static async message(text, title = "Message") {
+  static async message(text, title = "message") {
+    text = LanguageService.i18n(text);
     return this.#handleModal(`
         <div class="modal fade" id="${this.modalId}" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">${title}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="staticBackdropLabel">${LanguageService.i18n(title)}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="${LanguageService.i18n('close')}"></button>
               </div>
               <div class="modal-body">
                 ${text}
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="${this.modalId}_click_yes" >Close</button>
+                <button type="button" class="btn btn-primary" id="${this.modalId}_click_yes" >${LanguageService.i18n('close')}</button>
               </div>
             </div>
           </div>
@@ -21,26 +24,53 @@ export class ModalService {
             `);
   }
 
-  static async confirm(text, title = "Confirm") {
+  static async confirm(text, title = "confirm") {
+    text = LanguageService.i18n(text);
     return this.#handleModal(`
         <div class="modal fade" id="${this.modalId}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">${title}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="staticBackdropLabel">${LanguageService.i18n(title)}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="${LanguageService.i18n('close')}"></button>
               </div>
               <div class="modal-body">
                 ${text}
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary" id="${this.modalId}_click_yes" >Yes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">${LanguageService.i18n('no')}</button>
+                <button type="button" class="btn btn-primary" id="${this.modalId}_click_yes" >${LanguageService.i18n('yes')}</button>
               </div>
             </div>
           </div>
         </div>        
             `);
+  }
+
+  static async prompt(text, title = 'prompt') {
+    text = LanguageService.i18n(text);
+    return this.#handleModal(`
+      <div class="modal fade" id="${this.modalId}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">${LanguageService.i18n(title)}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="${LanguageService.i18n('close')}"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="formInput" class="form-label">${text}</label>
+                <input type="text" class="form-control" autofocus="true" id="formInput">
+              </div>              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">${LanguageService.i18n('cancel')}</button>
+              <button type="button" class="btn btn-primary" id="${this.modalId}_click_yes" >${LanguageService.i18n('accept')}</button>
+            </div>
+          </div>
+        </div>
+      </div>        
+          `);
   }
 
   static async #handleModal(modal) {
@@ -48,13 +78,25 @@ export class ModalService {
     document.body.insertAdjacentHTML('beforeend', modal);
     var myModal = new bootstrap.Modal(document.getElementById(this.modalId), {});
     myModal.show();
-    var result = false;
+    const input = document.getElementById('formInput');
+    var result = input ? undefined : false;
+    if (input) {
+      setTimeout(() => {
+        input.focus();
+      }, 500);
+      input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          result = input.value;
+          myModal.hide();
+        }
+      });
+    }
     return new Promise((resolve, reject) => {
       document.getElementById(this.modalId).addEventListener('hidden.bs.modal', () => {
         resolve(result);
       })
       document.getElementById(this.modalId + '_click_yes').addEventListener('click', () => {
-        result = true;
+        result = input ? input.value : true;
         myModal.hide();
       });
     });

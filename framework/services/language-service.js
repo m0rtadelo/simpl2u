@@ -1,9 +1,14 @@
 import { StorageService } from "./storage-service.js";
-
+import { words as ca } from '../assets/i18n/ca.js';
+import { words as en } from '../assets/i18n/en.js';
 export class LanguageService {
   static #lang = StorageService.loadApp(("lang")) || "en";
   static #subscribers = new Set(); // Store all subscriber functions
   static #languages = {};
+
+  static init() {
+    LanguageService.#languages = { ca, en };
+  }
 
   static subscribe(callback) {
     LanguageService.#subscribers.add(callback);
@@ -32,7 +37,9 @@ export class LanguageService {
   }
 
   static set(languages) {
-    LanguageService.#languages = languages;
+    Object.keys(languages).forEach((key) => {
+      LanguageService.#languages[key] = { ...LanguageService.#languages[key], ...languages[key] };
+    });
   }
 
   static i18n(key) {

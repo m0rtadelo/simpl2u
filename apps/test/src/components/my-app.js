@@ -16,30 +16,40 @@ export class MyApp extends StaticElement {
   template() {
     return `
     <div class="container-fluid">
-        <my-button id="lang_ca">ca</my-button>
-        <my-button id="lang_en">en</my-button>
-        <h1 class="mb-4">Simpl2U</h1>
-        <my-form context="panel1"></my-form>
-
-        <my-panel-info text="panel1" context="panel1"></my-panel-info>
-
-        <div class="row"><my-button id="testModal">Test modal service</my-button></div>
+      <div class="row">
+        <div class="col-12 text-end">
+          <my-button type="${LanguageService.lang === 'ca' ? 'primary' : 'secondary'}" id="lang_ca">ca</my-button>
+          <my-button type="${LanguageService.lang === 'en' ? 'primary' : 'secondary'}" id="lang_en">en</my-button>
+        </div>
+        <div class="col-12 text-center">
+          <h1 class="mb-4">Simpl2U</h1>
+        </div>
+        <div class="col-12">
+          <my-form context="panel1"></my-form>
+        </div>
+        <div class="col-12">
+          <my-panel-info text="panel1" context="panel1"></my-panel-info>
+        </div>
+        <div class="col-12">
+          <my-button id="testModal">Test modal service</my-button>
+        </div>
+      </div>
     </div>       
         `;
   }
 
   addEventListeners() {
-    console.log('ADdListenes');
     this.setEventListener('testModal', 'click', this.testModalService);
     this.setEventListener('lang_ca', 'click', () => LanguageService.lang = 'ca');
     this.setEventListener('lang_en', 'click', () => LanguageService.lang = 'en');
   }
 
   async testModalService() {
-    console.log('Enter');
-    const response = await ModalService.confirm('<b>Listen</b> Do you want to open a message? 🤗');
+    const response = await ModalService.confirm('modal.confirm');
     if (response) {
-      await ModalService.message('As you wish! 🤘');
+      const prompt = await ModalService.prompt('modal.prompt');
+      if (prompt !== undefined)
+        await ModalService.message(prompt);
     }
   }
 

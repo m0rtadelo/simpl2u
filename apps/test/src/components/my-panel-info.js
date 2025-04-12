@@ -15,7 +15,6 @@ export class MyPanelInfo extends ReactiveElement {
   }
 
   button() {
-    console.log('clicked!!');
     alert('clicked ' + this.text);
   }
 }
