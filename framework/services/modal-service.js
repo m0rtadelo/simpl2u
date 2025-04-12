@@ -1,7 +1,7 @@
 export class ModalService {
-    static modalId = 'myBootstrapModal';
-    static async message(text, title = "Message") {
-        return this.#handleModal(`
+  static modalId = 'myBootstrapModal';
+  static async message(text, title = "Message") {
+    return this.#handleModal(`
         <div class="modal fade" id="${this.modalId}" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -19,10 +19,10 @@ export class ModalService {
           </div>
         </div>        
             `);
-    }
-  
-    static async confirm(text, title = "Confirm") {
-        return this.#handleModal(`
+  }
+
+  static async confirm(text, title = "Confirm") {
+    return this.#handleModal(`
         <div class="modal fade" id="${this.modalId}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -41,27 +41,27 @@ export class ModalService {
           </div>
         </div>        
             `);
-    }
+  }
 
-    static async #handleModal(modal) {
-        this.#deleteModal();
-        document.body.insertAdjacentHTML('beforeend', modal);
-        var myModal = new bootstrap.Modal(document.getElementById(this.modalId), {});
-        myModal.show();
-        var result = false;
-        return new Promise((resolve, reject) => {
-            document.getElementById(this.modalId).addEventListener('hidden.bs.modal', () => {
-                resolve(result);
-              })
-            document.getElementById(this.modalId + '_click_yes').addEventListener('click', () => {
-                result = true;
-                myModal.hide();
-            });
-        });
-    }
+  static async #handleModal(modal) {
+    this.#deleteModal();
+    document.body.insertAdjacentHTML('beforeend', modal);
+    var myModal = new bootstrap.Modal(document.getElementById(this.modalId), {});
+    myModal.show();
+    var result = false;
+    return new Promise((resolve, reject) => {
+      document.getElementById(this.modalId).addEventListener('hidden.bs.modal', () => {
+        resolve(result);
+      })
+      document.getElementById(this.modalId + '_click_yes').addEventListener('click', () => {
+        result = true;
+        myModal.hide();
+      });
+    });
+  }
 
-    static #deleteModal() {
-        const modalElement = document.getElementById(this.modalId);
-        modalElement?.remove();
-    }
+  static #deleteModal() {
+    const modalElement = document.getElementById(this.modalId);
+    modalElement?.remove();
+  }
 }

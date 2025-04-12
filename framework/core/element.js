@@ -2,7 +2,6 @@ import { LanguageService } from "../services/language-service.js";
 import { StorageService } from "../services/storage-service.js";
 
 export class Element extends HTMLElement {
-
   context = this.getAttribute("context");
   static loaded = false;
   static #done;
@@ -21,6 +20,12 @@ export class Element extends HTMLElement {
       })
     }
   }
+  /**
+   * Helper to add listeners to html elements
+   * @param {*} id of the html element
+   * @param {*} event type ('click', 'input'...)
+   * @param {*} callback function to execute in event (avoid arrow functions)
+   */
   setEventListener(id, event, callback) {
     Promise.resolve().then(() => {
       const element = this.querySelector('#' + id);
@@ -32,14 +37,26 @@ export class Element extends HTMLElement {
     });
   }
 
-  // Must be implemented by subclasses
+  /**
+   * Callback to update the template when state or languages changes
+   * @param {*} state of the model in context
+   * @param {*} utils with helpers (i18n, sanitize)
+   * @returns the updated template
+   */
   template(state, utils) {
     return '';
   }
 
-  // Must be implemented by subclasses
+  /**
+   * Callback to add listeners when the template is ready.
+   * Use setEventListener to add listeners
+   */
   addEventListeners() { }
 
+  /**
+   * Method to force the render template.
+   * NOTE: Listeners will be destroyed and should be added again
+   */
   render() {
     this.innerHTML = this.template(this.state, this.utils);
   }

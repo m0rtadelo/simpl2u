@@ -1,6 +1,7 @@
 import { Element } from "./element.js";
 import { MyModel } from "../models/my-model.js";
 export class StaticElement extends Element {
+
   constructor() {
     super();
     if (this.context) {
@@ -9,6 +10,7 @@ export class StaticElement extends Element {
       this.state = MyModel.get();
     }
   }
+
   connectedCallback() {
     this.render();
     this.addEventListeners();
