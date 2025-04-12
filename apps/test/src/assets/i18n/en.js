@@ -1,4 +1,4 @@
 export const words = {
-    "name": "Name",
-    "surname": "Surname"
-}
+  'name': 'Name',
+  'surname': 'Surname'
+};

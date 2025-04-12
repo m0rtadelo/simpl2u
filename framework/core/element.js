@@ -8,39 +8,39 @@ export class Element extends HTMLElement {
   static #done;
   constructor() {
     super();
-    this.context = this.getAttribute("context");
     if (!Element.#done) {
       Element.#done = true;
       LanguageService.subscribe(() => {
-          this.render();
-          this.addEventListeners();
+        this.render();
+        this.addEventListeners();
       })
     }
-  }  
+  }
   setEventListener(id, event, callback) {
     Promise.resolve().then(() => {
       const element = this.querySelector('#' + id);
       if (element) {
         element.removeEventListener(event, this.buttonBound);
         this.buttonBound = callback.bind(this);
-        element.addEventListener(event, this.buttonBound);      }
+        element.addEventListener(event, this.buttonBound);
+      }
     });
   }
 
-    // Must be implemented by subclasses
-    template(state) {
-      return '';
-    }
-  
-    // Must be implemented by subclasses
-    addEventListeners() {}
-  
-    render() {
-      this.innerHTML = this.template(this.state);
-    }
+  // Must be implemented by subclasses
+  template(state, utils) {
+    return '';
+  }
+
+  // Must be implemented by subclasses
+  addEventListeners() { }
+
+  render() {
+    this.innerHTML = this.template(this.state);
+  }
 }
 
-if(!Element.loaded) {
+if (!Element.loaded) {
   window.electronAPI.getLocale().then((result) => {
     const userLang = StorageService.loadApp("lang");
     if (!userLang)
