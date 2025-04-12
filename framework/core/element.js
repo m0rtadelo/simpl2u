@@ -8,7 +8,9 @@ export class Element extends HTMLElement {
   static #done;
   utils = {
     i18n: LanguageService.i18n,
+    sanitize: (value) => (value || '').replace(/</g, '&lt;').replace(/>/g, '&gt;'),
   }
+
   constructor() {
     super();
     if (!Element.#done) {
