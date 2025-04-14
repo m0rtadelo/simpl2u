@@ -11,6 +11,7 @@ export class MyPanelInfo extends ReactiveElement {
         <div><small>${u.i18n('birthday')}: ${u.sanitize(state.birthday || '')}</small></div>
         <div><small>${u.i18n('nickname')}: ${u.sanitize(state.nickname || '')}</small></div>
         <div><small>${u.i18n('company')}: ${u.sanitize(state.company || '')}</small></div>
+        <div><small>${u.i18n('sex')}: ${u.i18n(state.sex || '')}</small></div>
       </div>
     </div>
         `;

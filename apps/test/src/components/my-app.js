@@ -21,6 +21,7 @@ export class MyApp extends StaticElement {
         ${ v === 'form1' ? '<my-form context="form1"></my-form>' : '' }
         ${ v === 'form2' ? '<my-form context="form2"></my-form>' : '' }
         ${ v === 'services' ? '<my-services></my-services>' : '' }
+        ${ v === 'crud' ? '<my-contacts></my-contacts>' : '' }
       </div>
     </div>       
         `;

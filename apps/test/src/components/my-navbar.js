@@ -24,6 +24,9 @@ export class MyNavBar extends ReactiveElement {
             <li class="nav-item">
               <a class="nav-link ${ v === 'services' ? 'active" aria-current="page"' : '"'}"" href="#services">Services</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link ${ v === 'crud' ? 'active" aria-current="page"' : '"'}"" href="#crud">Contacts</a>
+            </li>
           </ul>
           <ul class="navbar-nav ms-auto">
             <li class="nav-item dropdown">

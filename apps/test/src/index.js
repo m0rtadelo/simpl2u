@@ -4,3 +4,4 @@ import { MyPanelInfo } from './components/my-panel-info.js';
 import { MyForm } from './components/my-form.js';
 import { MyNavBar } from './components/my-navbar.js';
 import { MyServices } from './components/my-services.js';
+import { MyContacts } from './components/my-contacts.js';
