@@ -7,8 +7,14 @@ export class MyInput extends StaticElement {
 
   template(state, u) {
     return `
-      <label for="${this.name}" class="form-label col-12">${u.i18n(this.label)}</form>
-      <input autofocus="true" id="${this.name}" class="form-control col-12" type="text" value="${MyModel.get(this.name, this.context) || ""}"></input>
+      <label for="${this.name}" class="form-label col-12">${u.i18n(this.label)}</label>
+      <input required autofocus="true" id="${this.name}" class="form-control col-12" type="text" value="${MyModel.get(this.name, this.context) || ""}"></input>
+      <div class="invalid-feedback">
+        Field required
+      </div>
+      <div class="valid-feedback">
+        Looks good!
+      </div>
     `;
   }
 

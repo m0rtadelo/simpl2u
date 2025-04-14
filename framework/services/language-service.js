@@ -6,7 +6,7 @@ export class LanguageService {
   static #subscribers = new Set(); // Store all subscriber functions
   static #languages = {};
 
-  static init() {
+  static {
     LanguageService.#languages = { ca, en };
   }
 
