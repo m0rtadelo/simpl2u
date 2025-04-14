@@ -44,12 +44,12 @@ export class MyForm extends StaticElement {
   }
   onReady() {
     this.setEventListener('form', 'submit', this.save);
-    document.getElementById('sex').items = [];
+    this.get('sex').items = [];
   }
 
   save(event) {
     event.preventDefault();
-    const form = document.getElementById('form');
+    const form = this.get('form');
     if(!form.checkValidity())
       return;
     StorageService.saveApp(this.context, this.model);
