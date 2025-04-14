@@ -17,6 +17,8 @@ function createWindow() {
   });
 
   win.loadFile('index.html');
+  win.autoHideMenuBar = true;
+  win.setMenuBarVisibility(false);
   //win.webContents.openDevTools();
 }
 

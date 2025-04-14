@@ -4,8 +4,11 @@ export class RouterService {
 
   static {
     window.addEventListener('hashchange', () => {
-      RouterService.view = (location.hash || '').slice(1);
-      RouterService.#notify();
+      const newHash = (location.hash || '').slice(1);
+      if (newHash) {
+        RouterService.view = newHash;
+        RouterService.#notify();
+      }
     });
   }
 

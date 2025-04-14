@@ -7,4 +7,6 @@ export const words = {
   'no': 'No',
   'yes': 'Si',
   'confirm': 'Confirmació',
+  'field-required': 'Camp obligatori',
+  'field-good': 'Sembla correcte!',
 };

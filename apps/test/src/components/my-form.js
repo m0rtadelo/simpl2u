@@ -11,22 +11,38 @@ export class MyForm extends StaticElement {
 
   template() {
     return `
+      <div class="col-12 text-center">
+        <h1 class="mb-4 text-capitalize">${this.context}</h1>
+      </div>
       <form id="form" class="needs-validation" novalidate>
-        <div class="row align-items-end">
-        <my-input class="col-12 col-md-6 col-lg-3" name="name" context="${this.context}"></my-input>
-        <my-input class="col-12 col-md-6 col-lg-3" name="surname" context="${this.context}"></my-input>
-        <my-input class="col-12 col-md-6 col-lg-3" name="birthday" context="${this.context}"></my-input>
-        <my-input class="col-12 col-md-6 col-lg-3" name="company" context="${this.context}"></my-input>
-        <my-input class="col-12 col-md-6 col-lg-3" name="nickname" context="${this.context}"></my-input>
-        <div class="col-12 col-md-6 col-lg-3">
-        <button class="btn btn-primary col-12" id="button" type="submit">Save model</button>
-        </div></form>
+        <div class="row">
+          <div class="col-8">
+            <div class="row">
+              <my-input class="col-12 col-md-6 col-lg-3" required name="name" context="${this.context}"></my-input>
+              <my-input class="col-12 col-md-6 col-lg-6" required name="surname" context="${this.context}"></my-input>
+              <my-input class="col-12 col-md-6 col-lg-3" name="birthday" context="${this.context}"></my-input>
+              <my-input class="col-12 col-md-6 col-lg-3" name="nickname" context="${this.context}"></my-input>
+              <my-input class="col-12 col-md-12 col-lg-9" name="company" context="${this.context}"></my-input>
+            </div>
+          </div>
+          <div class="col-4">
+            <my-panel-info context="${this.context}"></my-panel-info>
+          </div>
+        </div>
+        <div class="row align-items-center mt-md-4">
+          <div class="col-12 col-md-6 col-lg-9 text-md-end form-text">
+          <span style="color: var(--bs-form-invalid-color)">* </span><span>Camps obligatoris</span>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3">
+            <button class="btn btn-primary col-12" id="button" type="submit">Save model</button>
+          </div>
+        </form>
         `;
   }
   addEventListeners() {
-    this.setEventListener('form', 'submit', this.sayHello);
+    this.setEventListener('form', 'submit', this.save);
   }
-  sayHello(event) {
+  save(event) {
     event.preventDefault();
     const form = document.getElementById('form');
     if(!form.checkValidity())
@@ -34,7 +50,6 @@ export class MyForm extends StaticElement {
     StorageService.saveApp(this.context, this.model);
     console.log('Full data (all contexts)', MyModel.data());
     ModalService.message('<pre>' + JSON.stringify(this.model, null, 2) + '</pre>', 'saved-data');
-    this.render();
   }
 }
 customElements.define('my-form', MyForm);

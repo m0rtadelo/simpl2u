@@ -7,14 +7,16 @@ export class MyInput extends StaticElement {
   required = this.hasAttribute('required');
   template(state, u) {
     return `
+    <div class="mb-3">
       <label for="${this.name}" class="form-label col-12">${u.i18n(this.label)}${this.required ? ' <span style="color: var(--bs-form-invalid-color)">*</span>' : ''}</label>
-      <input autofocus="true" id="${this.name}" ${this.required ? 'required' : ''} class="form-control col-12" type="text" value="${MyModel.get(this.name, this.context) || ''}"></input>
-      <div class="invalid-feedback">
-        Field required
+      <input autofocus="true" id="${this.name}" ${this.required ? 'required' : ''} class="form-control col-12" type="text" value="${state[this.name] || ''}"></input>
+      <!--<div class="invalid-feedback">
+        ${u.i18n('field-required')}
       </div>
       <div class="valid-feedback">
-        Looks good!
-      </div>
+      ${u.i18n('field-good')}
+      </div>-->
+    </div>
     `;
   }
 
