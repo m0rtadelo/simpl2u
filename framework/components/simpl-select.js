@@ -27,8 +27,8 @@ ${ this.items.map(item => `
     `;
   }
 
-  addEventListeners() {
-    this.setEventListener(this.name, 'change', this.change)
+  onReady() {
+    this.setEventListener(this.name, 'change', this.change);
   }
 
   change(value) {

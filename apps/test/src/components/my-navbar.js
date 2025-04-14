@@ -49,7 +49,7 @@ export class MyNavBar extends ReactiveElement {
     `;
   }
 
-  addEventListeners() {
+  onReady() {
     this.setEventListener('lang_ca', 'click', () => LanguageService.lang = 'ca');
     this.setEventListener('lang_en', 'click', () => LanguageService.lang = 'en');
     this.setEventListener('switchTheme', 'click', ThemeService.switchTheme);

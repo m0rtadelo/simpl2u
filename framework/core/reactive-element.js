@@ -36,7 +36,7 @@ export class ReactiveElement extends Element {
     container.innerHTML = templateHtml;
     this.replaceChildren(...container.childNodes);
     this.#upgradeCustomElements(this);
-    this.addEventListeners();
+    this.onReady();
   }
 
   #upgradeCustomElements(root) {

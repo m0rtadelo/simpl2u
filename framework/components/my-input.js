@@ -20,7 +20,7 @@ export class MyInput extends StaticElement {
     `;
   }
 
-  addEventListeners() {
+  onReady() {
     this.setEventListener(this.name, 'input', this.change);
   }
 

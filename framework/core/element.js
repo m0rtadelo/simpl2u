@@ -17,7 +17,7 @@ export class Element extends HTMLElement {
       Element.#done = true;
       LanguageService.subscribe(() => {
         this.render();
-        this.addEventListeners();
+        this.onReady();
       });
       window.electronAPI.getLocale().then((result) => {
         const userLang = StorageService.loadApp('lang');
@@ -26,7 +26,7 @@ export class Element extends HTMLElement {
       });
       RouterService.subscribe(() => {
         this.render();
-        this.addEventListeners();
+        this.onReady();
       });
     }
   }
@@ -59,7 +59,7 @@ export class Element extends HTMLElement {
    * Callback to add listeners when the template is ready.
    * Use setEventListener to add listeners
    */
-  addEventListeners() { }
+  onReady() { }
 
   /**
    * Method to force the render template.
@@ -87,6 +87,10 @@ export class Element extends HTMLElement {
         }, false);
       });
     })();    
+  }
+
+  get(id) {
+    return document.getElementById(id);
   }
 
   /**

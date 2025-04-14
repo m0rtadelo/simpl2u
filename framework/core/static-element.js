@@ -13,6 +13,6 @@ export class StaticElement extends Element {
 
   connectedCallback() {
     this.render();
-    this.addEventListeners();
+    this.onReady();
   }
 }

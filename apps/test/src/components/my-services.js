@@ -19,7 +19,7 @@ export class MyServices extends StaticElement {
     }
   }
 
-  addEventListeners() {
+  onReady() {
     this.setEventListener('testModal', 'click', this.testModalService);
   }
 }

@@ -16,7 +16,7 @@ export class MyApp extends StaticElement {
     const v = RouterService.view;
     return `
     <my-navbar></my-navbar>
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
         ${ v === 'form1' ? '<my-form context="form1"></my-form>' : '' }
         ${ v === 'form2' ? '<my-form context="form2"></my-form>' : '' }

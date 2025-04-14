@@ -11,6 +11,7 @@ export class MyForm extends StaticElement {
 
   template() {
     return `
+    <div class="container">
       <div class="col-12 text-center">
         <h1 class="mb-4 text-capitalize">${this.context}</h1>
       </div>
@@ -23,7 +24,7 @@ export class MyForm extends StaticElement {
               <my-input class="col-12 col-md-6 col-lg-3" name="birthday" context="${this.context}"></my-input>
               <my-input class="col-12 col-md-6 col-lg-3" name="nickname" context="${this.context}"></my-input>
               <my-input class="col-12 col-md-12 col-lg-9" name="company" context="${this.context}"></my-input>
-              <simpl-select id="sex" context="${this.context}" required name="sex" items='[{"id": "male", "text": "Male"},{"id": "female", "text": "Female"}]'></simpl-select>
+              <simpl-select id="sex" context="${this.context}" required name="sex" items='[{"id":"", "text":""},{"id": "male", "text": "Male"},{"id": "female", "text": "Female"}]'></simpl-select>
             </div>
           </div>
           <div class="col-4">
@@ -38,11 +39,14 @@ export class MyForm extends StaticElement {
             <button class="btn btn-primary col-12" id="button" type="submit">Save model</button>
           </div>
         </form>
+      </div>
         `;
   }
-  addEventListeners() {
+  onReady() {
     this.setEventListener('form', 'submit', this.save);
+    document.getElementById('sex').items = [];
   }
+
   save(event) {
     event.preventDefault();
     const form = document.getElementById('form');
