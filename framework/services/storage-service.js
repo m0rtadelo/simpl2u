@@ -24,11 +24,11 @@ export class StorageService {
   }
 
   static #getAppMap() {
-    return JSON.parse(localStorage.getItem(this.#key) || "{}");
+    return JSON.parse(localStorage.getItem(this.#key) || '{}');
   }
 
   static #getUserMap() {
-    return JSON.parse(sessionStorage.getItem(this.#key) || "{}");
+    return JSON.parse(sessionStorage.getItem(this.#key) || '{}');
   }
 
 }

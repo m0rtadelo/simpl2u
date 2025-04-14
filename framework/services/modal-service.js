@@ -1,8 +1,8 @@
-import { LanguageService } from "./language-service.js";
+import { LanguageService } from './language-service.js';
 
 export class ModalService {
   static modalId = 'myBootstrapModal';
-  static async message(text, title = "message") {
+  static async message(text, title = 'message') {
     text = LanguageService.i18n(text);
     return this.#handleModal(`
         <div class="modal fade" id="${this.modalId}" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -24,7 +24,7 @@ export class ModalService {
             `);
   }
 
-  static async confirm(text, title = "confirm") {
+  static async confirm(text, title = 'confirm') {
     text = LanguageService.i18n(text);
     return this.#handleModal(`
         <div class="modal fade" id="${this.modalId}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -76,10 +76,11 @@ export class ModalService {
   static async #handleModal(modal) {
     this.#deleteModal();
     document.body.insertAdjacentHTML('beforeend', modal);
-    var myModal = new bootstrap.Modal(document.getElementById(this.modalId), {});
+    // eslint-disable-next-line no-undef
+    let myModal = new bootstrap.Modal(document.getElementById(this.modalId), {});
     myModal.show();
     const input = document.getElementById('formInput');
-    var result = input ? undefined : false;
+    let result = input ? undefined : false;
     if (input) {
       setTimeout(() => {
         input.focus();
@@ -91,10 +92,10 @@ export class ModalService {
         }
       });
     }
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       document.getElementById(this.modalId).addEventListener('hidden.bs.modal', () => {
         resolve(result);
-      })
+      });
       document.getElementById(this.modalId + '_click_yes').addEventListener('click', () => {
         result = input ? input.value : true;
         myModal.hide();

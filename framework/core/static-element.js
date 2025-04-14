@@ -1,5 +1,5 @@
-import { Element } from "./element.js";
-import { MyModel } from "../models/my-model.js";
+import { Element } from './element.js';
+import { MyModel } from '../models/my-model.js';
 export class StaticElement extends Element {
 
   constructor() {

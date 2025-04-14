@@ -1,15 +1,15 @@
-import { MyModel } from "../models/my-model.js";
-import { LanguageService } from "../services/language-service.js";
-import { RouterService } from "../services/router-service.js";
-import { StorageService } from "../services/storage-service.js";
+import { MyModel } from '../models/my-model.js';
+import { LanguageService } from '../services/language-service.js';
+import { RouterService } from '../services/router-service.js';
+import { StorageService } from '../services/storage-service.js';
 
 export class Element extends HTMLElement {
-  context = this.getAttribute("context") || 'global';
+  context = this.getAttribute('context') || 'global';
   static #done; 
   utils = {
     i18n: LanguageService.i18n,
     sanitize: (value) => (value || '').replace(/</g, '&lt;').replace(/>/g, '&gt;'),
-  }
+  };
 
   constructor() {
     super();
@@ -18,20 +18,16 @@ export class Element extends HTMLElement {
       LanguageService.subscribe(() => {
         this.render();
         this.addEventListeners();
-      })
-      window.electronAPI.getLocale().then((result) => {
-        const userLang = StorageService.loadApp("lang");
-        if (!userLang)
-          LanguageService.lang = result || "en";
       });
-      RouterService.subscribe((view) => {
+      window.electronAPI.getLocale().then((result) => {
+        const userLang = StorageService.loadApp('lang');
+        if (!userLang)
+          LanguageService.lang = result || 'en';
+      });
+      RouterService.subscribe(() => {
         this.render();
         this.addEventListeners();
       });
-      // window.addEventListener('hashchange', () => {
-      //   MyModel.set(location.hash, 'view', 'global');
-      //   console.log(MyModel.data());
-      // });    
     }
   }
   /**
@@ -72,25 +68,25 @@ export class Element extends HTMLElement {
   render() {
     this.innerHTML = this.template(this.state, this.utils);
 
-// Example starter JavaScript for disabling form submissions if there are invalid fields
-(() => {
-  'use strict'
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (() => {
+      'use strict';
 
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  const forms = document.querySelectorAll('.needs-validation')
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      const forms = document.querySelectorAll('.needs-validation');
 
-  // Loop over them and prevent submission
-  Array.from(forms).forEach(form => {
-    form.addEventListener('submit', event => {
-      if (!form.checkValidity()) {
-        event.preventDefault()
-        event.stopPropagation()
-      }
+      // Loop over them and prevent submission
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
 
-      form.classList.add('was-validated')
-    }, false)
-  })
-})()    
+          form.classList.add('was-validated');
+        }, false);
+      });
+    })();    
   }
 
   /**

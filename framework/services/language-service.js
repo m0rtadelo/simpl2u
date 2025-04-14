@@ -1,13 +1,14 @@
-import { StorageService } from "./storage-service.js";
+import { StorageService } from './storage-service.js';
 import { words as ca } from '../assets/i18n/ca.js';
 import { words as en } from '../assets/i18n/en.js';
 export class LanguageService {
-  static #lang = StorageService.loadApp(("lang")) || "en";
+  static #lang = StorageService.loadApp(('lang')) || 'en';
   static #subscribers = new Set(); // Store all subscriber functions
   static #languages = {};
 
   static {
     LanguageService.#languages = { ca, en };
+    document.documentElement.setAttribute('lang', this.#lang);
   }
 
   static subscribe(callback) {
@@ -33,7 +34,8 @@ export class LanguageService {
       this.#lang = value.substring(0, 2);
       LanguageService.#notify();
     }
-    StorageService.saveApp("lang", this.#lang);
+    StorageService.saveApp('lang', this.#lang);
+    document.documentElement.setAttribute('lang', shortLang);
   }
 
   static set(languages) {

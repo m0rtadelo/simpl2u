@@ -1,14 +1,14 @@
-import { StaticElement } from "../core/static-element.js";
-import { MyModel } from "../models/my-model.js";
+import { StaticElement } from '../core/static-element.js';
+import { MyModel } from '../models/my-model.js';
 
 export class MyInput extends StaticElement {
-  name = this.getAttribute("name");
-  label = this.getAttribute("label") || this.name;
-
+  name = this.getAttribute('name');
+  label = this.getAttribute('label') || this.name;
+  required = this.hasAttribute('required');
   template(state, u) {
     return `
-      <label for="${this.name}" class="form-label col-12">${u.i18n(this.label)}</label>
-      <input required autofocus="true" id="${this.name}" class="form-control col-12" type="text" value="${MyModel.get(this.name, this.context) || ""}"></input>
+      <label for="${this.name}" class="form-label col-12">${u.i18n(this.label)}${this.required ? ' <span style="color: var(--bs-form-invalid-color)">*</span>' : ''}</label>
+      <input autofocus="true" id="${this.name}" ${this.required ? 'required' : ''} class="form-control col-12" type="text" value="${MyModel.get(this.name, this.context) || ''}"></input>
       <div class="invalid-feedback">
         Field required
       </div>

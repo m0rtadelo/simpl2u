@@ -16,7 +16,7 @@ export class MyModel {
     //if (context && !MyModel.#model[context])
     //  MyModel.#model[context] = {};
     if (id && !MyModel.#model[context][id]) {
-      MyModel.#model[context][id] = "";
+      MyModel.#model[context][id] = '';
     }
     //MyModel.#notify();
     return id ? MyModel.#model[context][id] : MyModel.#model[context];
