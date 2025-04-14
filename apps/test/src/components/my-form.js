@@ -19,7 +19,7 @@ export class MyForm extends StaticElement {
         <div class="row">
           <div class="col-8">
             <div class="row">
-              <my-input class="col-12 col-md-6 col-lg-3" required name="name" context="${this.context}"></my-input>
+              <my-input class="col-12 col-md-6 col-lg-3" required id="name" name="name" context="${this.context}"></my-input>
               <my-input class="col-12 col-md-6 col-lg-6" required name="surname" context="${this.context}"></my-input>
               <my-input class="col-12 col-md-6 col-lg-3" name="birthday" context="${this.context}"></my-input>
               <my-input class="col-12 col-md-6 col-lg-3" name="nickname" context="${this.context}"></my-input>
@@ -42,9 +42,11 @@ export class MyForm extends StaticElement {
       </div>
         `;
   }
+
   onReady() {
     this.setEventListener('form', 'submit', this.save);
-    this.get('sex').items = [];
+    //this.get('sex').items = [{id:'', text:''},{id: 'male', text: 'Male'},{id: 'female', 'text': 'Female'}];
+    setTimeout(() => { this.get('name').focus(); },300);
   }
 
   save(event) {

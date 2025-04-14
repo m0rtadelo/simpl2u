@@ -1,16 +1,11 @@
 import { StaticElement } from '../core/static-element.js';
 
 export class SimplSelect extends StaticElement {
-  name = this.getAttribute('name');
-  label = this.getAttribute('label') || this.name;
-  required = this.hasAttribute('required');
-  items;
-
   constructor() {
     super();
-    this.items = this.getAttribute('items') || [];
-    if (typeof this.items === 'string') {
-      this.items = JSON.parse(this.items);
+    this._items = this.getAttribute('items') || [];
+    if (typeof this._items === 'string') {
+      this._items = JSON.parse(this._items);
     }
   }
 

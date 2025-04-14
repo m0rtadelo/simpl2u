@@ -5,6 +5,11 @@ import { StorageService } from '../services/storage-service.js';
 
 export class Element extends HTMLElement {
   context = this.getAttribute('context') || 'global';
+  name = this.getAttribute('name');
+  label = this.getAttribute('label') || this.name;
+  required = this.hasAttribute('required');
+  _items;
+
   static #done; 
   utils = {
     i18n: LanguageService.i18n,
@@ -30,6 +35,17 @@ export class Element extends HTMLElement {
       });
     }
   }
+
+  get items() {
+    return this._items;
+  }
+
+  set items(value) {
+    this._items = value;
+    this.render();
+    this.onReady();
+  }
+
   /**
    * Helper to add listeners to html elements
    * @param {*} id of the html element

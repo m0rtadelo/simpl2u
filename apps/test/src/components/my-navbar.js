@@ -16,22 +16,22 @@ export class MyNavBar extends ReactiveElement {
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item">
+              <a class="nav-link ${ v === 'crud' ? 'active" aria-current="page"' : '"'}"" href="#crud">Contacts</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link ${ v === 'form1' ? 'active" aria-current="page"' : '"'}" href="#form1">Form 1</a>
             </li>
             <li class="nav-item">
               <a class="nav-link ${ v === 'form2' ? 'active" aria-current="page"' : '"'}" href="#form2">Form 2</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link ${ v === 'services' ? 'active" aria-current="page"' : '"'}"" href="#services">Services</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link ${ v === 'crud' ? 'active" aria-current="page"' : '"'}"" href="#crud">Contacts</a>
+              <a class="nav-link ${ v === 'services' ? 'active" aria-current="page"' : '"'}"" href="#services">Examples</a>
             </li>
           </ul>
           <ul class="navbar-nav ms-auto">
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Lang
+                Language
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item ${LanguageService.lang === 'en' ? 'active' : ''}" id="lang_en" href="#">English</a></li>
@@ -40,7 +40,7 @@ export class MyNavBar extends ReactiveElement {
             </li>
 
           <li class="nav-item">
-            <a class="nav-link" id="switchTheme" href="#"><span class="bi-highlights"></span></a>
+            <a class="nav-link" id="switchTheme" title="Switch" href="#"><span class="bi-highlights"></span></a>
           </li>
           </ul>
         </div>

@@ -2,9 +2,6 @@ import { StaticElement } from '../core/static-element.js';
 import { MyModel } from '../models/my-model.js';
 
 export class MyInput extends StaticElement {
-  name = this.getAttribute('name');
-  label = this.getAttribute('label') || this.name;
-  required = this.hasAttribute('required');
   template(state, u) {
     return `
     <div class="mb-3">
@@ -26,6 +23,10 @@ export class MyInput extends StaticElement {
 
   change(value) {
     MyModel.set(value.target.value, this.name, this.context);
+  }
+
+  focus() {
+    document.querySelector('input#' + this.name).focus();
   }
 }
 customElements.define('my-input', MyInput);

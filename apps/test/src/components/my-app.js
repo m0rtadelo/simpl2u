@@ -9,7 +9,7 @@ export class MyApp extends StaticElement {
   constructor() {
     super();
     LanguageService.set({ ca, en });
-    RouterService.view = 'form1';
+    RouterService.view = 'crud';
   }
 
   template() {

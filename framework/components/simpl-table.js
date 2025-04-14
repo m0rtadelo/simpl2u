@@ -1,9 +1,9 @@
 import { ReactiveElement } from '../core/reactive-element.js';
 
 export class SimplTable extends ReactiveElement {
-  template() {
+  template(state, u) {
     return `
-    <div class="card mt-4"><div class="card-body">
+    <div class="card mt-4"><!--<div class="card-body">-->
 <table class="table table-striped table-hover">
   <thead>
     <tr>
@@ -34,7 +34,7 @@ export class SimplTable extends ReactiveElement {
     </tr>  
   </tbody>
 </table>
-</div></div>
+</div><!--</div>-->
         `;
   }
 }
