@@ -7,6 +7,10 @@ export class MyForm extends StaticElement {
   constructor() {
     super();
     this.model = StorageService.loadApp(this.context) || {};
+    // document.getElementById('sex').setAttribute([
+    //   { id: 'male', text: 'Male' },
+    //   { id: 'female', text: 'Female' }
+    // ]);
   }
 
   template() {
@@ -23,6 +27,7 @@ export class MyForm extends StaticElement {
               <my-input class="col-12 col-md-6 col-lg-3" name="birthday" context="${this.context}"></my-input>
               <my-input class="col-12 col-md-6 col-lg-3" name="nickname" context="${this.context}"></my-input>
               <my-input class="col-12 col-md-12 col-lg-9" name="company" context="${this.context}"></my-input>
+              <simpl-select id="sex" context="${this.context}" name="Sex" items='[{"id": "male", "text": "Male"},{"id": "female", "text": "Female"}]'></simpl-select>
             </div>
           </div>
           <div class="col-4">
