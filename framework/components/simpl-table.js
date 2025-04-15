@@ -1,16 +1,22 @@
 import { ReactiveElement } from '../core/reactive-element.js';
 
 export class SimplTable extends ReactiveElement {
+
+  constructor() {
+    super();
+    if (!this.model[this.name]) {
+      this.setModel(this.name, []);
+    }
+  }
+
   template(state, u) {
+    console.log(state[this.name]);
     return `
     <div class="card mt-4"><!--<div class="card-body">-->
 <table class="table table-striped table-hover">
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>    
+      ${this.#renderHeaders()}
     </tr>
   </thead>
   <tbody>
@@ -36,6 +42,24 @@ export class SimplTable extends ReactiveElement {
 </table>
 </div><!--</div>-->
         `;
+  }
+
+  #getHeaders() {
+    let headers = [];
+    if (this.model[this.name].length) {
+      const item = this.model[this.name][0];
+      headers = Object.keys(item);
+    }
+    return headers;
+  }
+
+  #renderHeaders() {
+    const headers = this.#getHeaders();
+    return headers.map((header) => `<th>${header}</th>`).join('\n');
+  }
+
+  #renderTable() {
+
   }
 }
 customElements.define('simpl-table', SimplTable);
