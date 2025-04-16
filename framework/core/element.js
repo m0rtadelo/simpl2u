@@ -8,6 +8,9 @@ export class Element extends HTMLElement {
   name = this.getAttribute('name');
   label = this.getAttribute('label') || this.name;
   required = this.hasAttribute('required');
+  hidden = this.hasAttribute('hidden');
+  disabled = this.hasAttribute('disabled');
+  state;
   _items;
 
   static #done; 
@@ -21,8 +24,7 @@ export class Element extends HTMLElement {
     if (!Element.#done) {
       Element.#done = true;
       LanguageService.subscribe(() => {
-        this.render();
-        this.onReady();
+        this.refesh();
       });
       window.electronAPI.getLocale().then((result) => {
         const userLang = StorageService.loadApp('lang');
@@ -30,8 +32,7 @@ export class Element extends HTMLElement {
           LanguageService.lang = result || 'en';
       });
       RouterService.subscribe(() => {
-        this.render();
-        this.onReady();
+        this.refesh();
       });
     }
   }
@@ -42,15 +43,22 @@ export class Element extends HTMLElement {
 
   set items(value) {
     this._items = value;
+    this.refesh();
+  }
+
+  /**
+   * Method to render the template and execute the onReady method
+   */
+  refesh() {
     this.render();
     this.onReady();
   }
 
   /**
    * Helper to add listeners to html elements
-   * @param {*} id of the html element
-   * @param {*} event type ('click', 'input'...)
-   * @param {*} callback function to execute in event (avoid arrow functions)
+   * @param {string} id of the html element
+   * @param {string} event type ('click', 'input'...)
+   * @param {Function} callback function to execute in event (avoid arrow functions)
    */
   setEventListener(id, event, callback) {
     const element = this.querySelector('#' + id);
@@ -58,13 +66,15 @@ export class Element extends HTMLElement {
       element.removeEventListener(event, this.buttonBound);
       this.buttonBound = callback.bind(this);
       element.addEventListener(event, this.buttonBound);
+    } else {
+      console.warn('Element not found', id);
     }
   }
 
   /**
    * Callback to update the template when state or languages changes
-   * @param {*} state of the model in context
-   * @param {*} utils with helpers (i18n, sanitize)
+   * @param {object} state of the model in context
+   * @param {object} utils with helpers (i18n, sanitize)
    * @returns the updated template
    */
   template(state, utils) {
@@ -105,6 +115,11 @@ export class Element extends HTMLElement {
     })();    
   }
 
+  /**
+   * 
+   * @param {string} id 
+   * @returns { Element }
+   */
   get(id) {
     return document.getElementById(id);
   }
@@ -125,8 +140,8 @@ export class Element extends HTMLElement {
 
   /**
    * Setter to set an item value in the model 
-   * @param {*} id of the item (enclosed in the current context)
-   * @param {*} value to set in the selected item
+   * @param {string} id of the item (enclosed in the current context)
+   * @param {any} value to set in the selected item
    */
   setModel(id, value) {
     MyModel.set(value, id, this.context);

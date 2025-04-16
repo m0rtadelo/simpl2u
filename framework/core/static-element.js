@@ -12,7 +12,6 @@ export class StaticElement extends Element {
   }
 
   connectedCallback() {
-    this.render();
-    this.onReady();
+    this.refesh();
   }
 }

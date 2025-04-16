@@ -1,3 +1,4 @@
+import { MyModel } from '../models/my-model.js';
 import { LanguageService } from './language-service.js';
 
 export class ModalService {
@@ -71,6 +72,55 @@ export class ModalService {
         </div>
       </div>        
           `);
+  }
+
+  static async open(body, title = '') {
+    return this.#handleOpenModal(`
+      <div class="modal fade" id="${this.modalId}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <form id="form" class="needs-validation" novalidate>
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">${LanguageService.i18n(title)}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="${LanguageService.i18n('close')}"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">${body}
+              </div>              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">${LanguageService.i18n('cancel')}</button>
+              <button type="submit" class="btn btn-primary" id="${this.modalId}_click_yes" >${LanguageService.i18n('accept')}</button>
+            </div>
+          </div>
+        </div>
+        </form>        
+      </div>
+          `);
+
+  }
+
+  static async #handleOpenModal(modal) {
+    this.#deleteModal();
+    document.body.insertAdjacentHTML('beforeend', modal);
+    // eslint-disable-next-line no-undef
+    let myModal = new bootstrap.Modal(document.getElementById(this.modalId), {});
+    myModal.show();
+    const form = document.getElementById('form');
+    let result = false;
+    form.addEventListener('submit', (event) => {
+      if(!form.checkValidity())
+        return;
+      event.preventDefault();
+      result = true;
+      myModal.hide();
+    });
+
+    return new Promise((resolve) => {
+      document.getElementById(this.modalId).addEventListener('hidden.bs.modal', () => {
+        resolve(result);
+      });
+    });
   }
 
   static async #handleModal(modal) {

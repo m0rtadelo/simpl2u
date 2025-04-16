@@ -2,7 +2,7 @@ export class MyModel {
   static #model = {};
   static #subscribers = new Set(); // Store all subscriber functions
 
-  static #setContext(context) {
+  static #initContext(context) {
     if (context && !MyModel.#model[context])
       MyModel.#model[context] = {};
   }
@@ -12,24 +12,26 @@ export class MyModel {
   }
 
   static get(id, context = 'global') {
-    this.#setContext(context);
-    //if (context && !MyModel.#model[context])
-    //  MyModel.#model[context] = {};
+    this.#initContext(context);
     if (id && !MyModel.#model[context][id]) {
       MyModel.#model[context][id] = '';
     }
-    //MyModel.#notify();
     return id ? MyModel.#model[context][id] : MyModel.#model[context];
   }
 
   static set(value, id, context = 'global') {
-    this.#setContext(context);
+    this.#initContext(context);
     if (id) {
       MyModel.#model[context][id] = value;
     } else {
       MyModel.#model[context] = value;
     }
     MyModel.#notify(); // Notify all subscribers
+  }
+
+  static setContext(context, data) {
+    this.#initContext(context);
+    MyModel.#model[context] = data;
   }
 
   static subscribe(callback) {
