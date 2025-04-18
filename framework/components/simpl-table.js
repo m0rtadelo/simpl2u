@@ -99,10 +99,10 @@ export class SimplTable extends ReactiveElement {
     const headers = this.getHeaders();
     let output = '';
     this.model[this.name].forEach((item, index) => {
-      const searchable = headers.map((header) => `${item[header]}`).join('\t');
-      if (searchable.toLowerCase().includes((this.model['filter'] || '')?.toLowerCase())) {
+      const searchable = this.unaccent(headers.map((header) => `${item[header]}`).join('\t'));
+      if (this.unaccent(searchable).includes((this.unaccent(this.model['filter'] || '')))) {
         output += '<tr>';
-        output += headers.map((header) => `<td>${item[header]}</td>`).join('\n');
+        output += headers.map((header) => `<td>${this.sanitize(item[header])}</td>`).join('\n');
         output += this.actions ? '<td class="text-end" style="width: 100px">' : '';
         output += this.actions && this.actions.includes('r') ? `<a href="#" id="detail_${index}"><span  class="bi bi-eye me-2" title="Detail"></span></a>` : '';
         output += this.actions && this.actions.includes('u') ? `<a href="#" id="edit_${index}"><span  class="bi bi-pencil me-2" title="Edit"></span></a>` : '';

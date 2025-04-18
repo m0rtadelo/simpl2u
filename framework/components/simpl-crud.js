@@ -25,6 +25,7 @@ export class SimplCrud extends StaticElement {
     if (!this.model.data) {
       this.model.data = [];
     }
+    //if ()
   }
 
   template() {
@@ -47,11 +48,8 @@ export class SimplCrud extends StaticElement {
     const map = {
       'create': async () => await this.doCreate(),
       'update': async (item) => await this.doEdit(item),
-      'delete':  async (item) => await this.doDelete(item),
-      'detail': (data) => {
-        console.log('Read action');
-        // Handle read action
-      },
+      'delete': async (item) => await this.doDelete(item),
+      'detail': async (item) => await this.doDetail(item),
     };
     map?.[action]?.(data);
   }
@@ -85,7 +83,7 @@ export class SimplCrud extends StaticElement {
       this.state.data = this.state.data || [];
       this.state.data.push(this.#addIndex(modalData));
       this.model = this.state;
-      StorageService.saveApp(this.context, this.model);
+      this.#saveData();
     }
   }
 
@@ -94,11 +92,16 @@ export class SimplCrud extends StaticElement {
     MyModel.setContext('__simpl-modal', modified);
     if (await ModalService.open(this.#generateForm())) {
       MyModel.setContext('__simpl-modal', item);
-      Object.keys(item).forEach((key) => {
+      Object.keys(modified).forEach((key) => {
         MyModel.set(modified[key], key, '__simpl-modal');
       });
-      StorageService.saveApp(this.context, this.model);
+      this.#saveData();
     }
+  }
+
+  async doDetail(item) {
+    MyModel.setContext('__simpl-modal', item);
+    await ModalService.open(this.#generateForm(true), '', true)
   }
 
   async doDelete(item) {
@@ -107,15 +110,18 @@ export class SimplCrud extends StaticElement {
       this.state.data.forEach((reg) => {
         if (reg !== item) {
           result.push(reg);
-        } else {
-          //item = undefined;
         }
       });
       this.state.data = result;
       this.model = this.state;
-      console.log(result);
-      StorageService.saveApp(this.context, this.model);
+      this.#saveData();
     }
+  }
+
+  #saveData() {
+    const copy = {...this.model};
+    delete copy.filter;
+    StorageService.saveApp(this.context, copy);
   }
 
   async #hasUnique(data, items) {
@@ -145,7 +151,7 @@ export class SimplCrud extends StaticElement {
     return data;
   }
 
-  #generateForm() {
+  #generateForm(readonly = false) {
     const items = 
     JSON.parse(
       JSON.stringify(
@@ -153,7 +159,7 @@ export class SimplCrud extends StaticElement {
       )
     );
     const fields = items.map((field) => {
-      return `<my-input class="${field.class}" context="__simpl-modal" name="${field.name}" ${field.required ? 'required' : ''} ${field.hidden ? 'hidden' : ''} ${field.disabled ? 'disabled' : ''}></my-input>`;
+      return `<my-input class="${field.class}" context="__simpl-modal" name="${field.name}" ${field.required  && !(field.disabled || readonly) ? 'required' : ''} ${field.hidden ? 'hidden' : ''} ${field.disabled || readonly ? 'disabled' : ''}></my-input>`;
     }).join('\n');
     return `<div class="row">${fields}</div>`;
   }

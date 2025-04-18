@@ -74,7 +74,7 @@ export class ModalService {
           `);
   }
 
-  static async open(body, title = '') {
+  static async open(body, title = '', hideCancel = false) {
     return this.#handleOpenModal(`
       <div class="modal fade" id="${this.modalId}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <form id="form" class="needs-validation" novalidate>
@@ -89,7 +89,7 @@ export class ModalService {
               </div>              
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">${LanguageService.i18n('cancel')}</button>
+            ${hideCancel ? '' : `<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">${LanguageService.i18n('cancel')}</button>`}
               <button type="submit" class="btn btn-primary" id="${this.modalId}_click_yes" >${LanguageService.i18n('accept')}</button>
             </div>
           </div>

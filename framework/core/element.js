@@ -16,7 +16,8 @@ export class Element extends HTMLElement {
   static #done; 
   utils = {
     i18n: LanguageService.i18n,
-    sanitize: (value) => (value || '').replace(/</g, '&lt;').replace(/>/g, '&gt;'),
+    sanitize: (value) => this.sanitize(value),
+    unaccent: (value) => this.unaccent(value),
   };
 
   constructor() {
@@ -74,7 +75,7 @@ export class Element extends HTMLElement {
   /**
    * Callback to update the template when state or languages changes
    * @param {object} state of the model in context
-   * @param {object} utils with helpers (i18n, sanitize)
+   * @param {object} utils with helpers (i18n, sanitize, unaccent)
    * @returns the updated template
    */
   template(state, utils) {
@@ -146,5 +147,16 @@ export class Element extends HTMLElement {
    */
   setModel(id, value) {
     MyModel.set(value, id, this.context);
+  }
+
+  unaccent(word) {
+    return word
+      .normalize("NFD") // Normalize to decomposed form
+      .replace(/[\u0300-\u036f]/g, "") // Remove diacritic marks
+      .toLowerCase(); // Convert to lowercase
+  }
+  
+  sanitize(value) {
+    return (value || '').toString().replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 }
