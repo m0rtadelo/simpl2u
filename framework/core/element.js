@@ -135,6 +135,7 @@ export class Element extends HTMLElement {
    * Setter to set the new model (enclosed in the current context)
    */
   set model(value) {
+    this.state = value;
     MyModel.set(value, undefined, this.context);
   }
 

@@ -23,7 +23,6 @@ export class SimplCrud extends StaticElement {
       data: []
     };
     if (!this.model.data) {
-      console.log(this.model);
       this.model.data = [];
     }
   }
@@ -47,12 +46,9 @@ export class SimplCrud extends StaticElement {
   onAction(action, data) {
     const map = {
       'create': async () => await this.doCreate(),
-      'update': async (data) => await this.doEdit(data),
-      'delete': (data) => {
-        console.log('Delete action');
-        // Handle delete action
-      },
-      'read': (data) => {
+      'update': async (item) => await this.doEdit(item),
+      'delete':  async (item) => await this.doDelete(item),
+      'detail': (data) => {
         console.log('Read action');
         // Handle read action
       },
@@ -86,27 +82,40 @@ export class SimplCrud extends StaticElement {
         this.doCreate(true);
         return;
       }
+      this.state.data = this.state.data || [];
       this.state.data.push(this.#addIndex(modalData));
       this.model = this.state;
-      StorageService.saveApp(this.context, this.state);
+      StorageService.saveApp(this.context, this.model);
     }
   }
 
-  async doEdit(data) {
-    console.log(data);
-    MyModel.setContext('__simpl-modal', data);
+  async doEdit(item) {
+    const modified = JSON.parse(JSON.stringify(item));
+    MyModel.setContext('__simpl-modal', modified);
     if (await ModalService.open(this.#generateForm())) {
-      const modalData = MyModel.data()['__simpl-modal'];
-      // if (await this.#hasUnique(modalData, this.state.data)) {
-      //   this.doCreate(true);
-      //   return;
-      // }
-      // this.state.data.push(this.#addIndex(modalData));
-      data = modalData;
-      this.model = this.state;
-      StorageService.saveApp(this.context, this.state);
+      MyModel.setContext('__simpl-modal', item);
+      Object.keys(item).forEach((key) => {
+        MyModel.set(modified[key], key, '__simpl-modal');
+      });
+      StorageService.saveApp(this.context, this.model);
     }
+  }
 
+  async doDelete(item) {
+    if (await ModalService.confirm('Do you want to delete this item?')) {
+      const result = [];
+      this.state.data.forEach((reg) => {
+        if (reg !== item) {
+          result.push(reg);
+        } else {
+          //item = undefined;
+        }
+      });
+      this.state.data = result;
+      this.model = this.state;
+      console.log(result);
+      StorageService.saveApp(this.context, this.model);
+    }
   }
 
   async #hasUnique(data, items) {

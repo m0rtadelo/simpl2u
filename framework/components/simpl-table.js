@@ -44,9 +44,10 @@ export class SimplTable extends ReactiveElement {
 
   onReady() {
     this.setEventListener('create', 'click', () => this.create());
-    // this.setEventListener('edit_1', 'click', () => this.edit());
     this.model[this.name].forEach((item, index) => {
       this.setEventListener('edit_' + index, 'click', () => this.edit(item));
+      this.setEventListener('detail_' + index, 'click', () => this.detail(item));
+      this.setEventListener('delete_' + index, 'click', () => this.delete(item));
     });
   }
 
@@ -55,7 +56,15 @@ export class SimplTable extends ReactiveElement {
   }
 
   edit(item) {
-    this.#notify('update', JSON.parse(JSON.stringify(item)));
+    this.#notify('update', item);
+  }
+
+  detail(item) {
+    this.#notify('detail', item);
+  }
+
+  delete(item) {
+    this.#notify('delete', item);
   }
 
   addHeaderButtons() {
@@ -94,7 +103,11 @@ export class SimplTable extends ReactiveElement {
       if (searchable.toLowerCase().includes((this.model['filter'] || '')?.toLowerCase())) {
         output += '<tr>';
         output += headers.map((header) => `<td>${item[header]}</td>`).join('\n');
-        output += this.actions ? `<td class="text-end" style="width: 100px"><a href="#" id="edit_${index}"><span  class="bi bi-plus-square me-2" title="Edit"></span></a></td>` : '';
+        output += this.actions ? '<td class="text-end" style="width: 100px">' : '';
+        output += this.actions && this.actions.includes('r') ? `<a href="#" id="detail_${index}"><span  class="bi bi-eye me-2" title="Detail"></span></a>` : '';
+        output += this.actions && this.actions.includes('u') ? `<a href="#" id="edit_${index}"><span  class="bi bi-pencil me-2" title="Edit"></span></a>` : '';
+        output += this.actions && this.actions.includes('d') ? `<a href="#" id="delete_${index}"><span  class="bi bi-trash me-2" title="Delete"></span></a>` : '';
+        output += this.actions ? '</td>' : '';
         output += '</tr>';
       }
     });
