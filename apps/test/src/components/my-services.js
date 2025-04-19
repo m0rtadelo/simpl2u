@@ -5,7 +5,7 @@ export class MyServices extends StaticElement {
   template() {
     return `
         <div class="col-12 p-4">
-          <my-button id="testModal" class="d-grid">Test modal service</my-button>
+          <simpl-button id="testModal" class="d-grid">Test modal service</simpl-button>
         </div>    
 
 <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button>

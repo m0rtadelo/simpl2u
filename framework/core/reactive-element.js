@@ -1,10 +1,10 @@
 import { Element } from './element.js';
-import { MyModel } from '../models/my-model.js';
+import { SimplModel } from '../models/simpl-model.js';
 export class ReactiveElement extends Element {
 
   constructor() { 
     super();
-    this.state = MyModel.get(undefined, this.context);
+    this.state = SimplModel.get(undefined, this.context);
     this._reactiveState = new Proxy(this.state, {
       set: (target, prop, value) => {
         target[prop] = value;
@@ -12,7 +12,7 @@ export class ReactiveElement extends Element {
         return true;
       }
     });
-    MyModel.subscribe(model => {
+    SimplModel.subscribe(model => {
       this.setState(model[this.context]);
     });
 

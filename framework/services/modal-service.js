@@ -1,4 +1,4 @@
-import { MyModel } from '../models/my-model.js';
+import { SimplModel } from '../models/simpl-model.js';
 import { LanguageService } from './language-service.js';
 
 export class ModalService {

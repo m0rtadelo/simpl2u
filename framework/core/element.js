@@ -1,4 +1,4 @@
-import { MyModel } from '../models/my-model.js';
+import { SimplModel } from '../models/simpl-model.js';
 import { LanguageService } from '../services/language-service.js';
 import { RouterService } from '../services/router-service.js';
 import { StorageService } from '../services/storage-service.js';
@@ -129,7 +129,7 @@ export class Element extends HTMLElement {
    * Getter to return the current model (enclosed in the current context)
    */
   get model() {
-    return MyModel.get(undefined, this.context);
+    return SimplModel.get(undefined, this.context);
   }
 
   /**
@@ -137,7 +137,7 @@ export class Element extends HTMLElement {
    */
   set model(value) {
     this.state = value;
-    MyModel.set(value, undefined, this.context);
+    SimplModel.set(value, undefined, this.context);
   }
 
   /**
@@ -146,7 +146,7 @@ export class Element extends HTMLElement {
    * @param {any} value to set in the selected item
    */
   setModel(id, value) {
-    MyModel.set(value, id, this.context);
+    SimplModel.set(value, id, this.context);
   }
 
   unaccent(word) {

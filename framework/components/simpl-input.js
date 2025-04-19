@@ -1,7 +1,7 @@
 import { StaticElement } from '../core/static-element.js';
-import { MyModel } from '../models/my-model.js';
+import { SimplModel } from '../models/simpl-model.js';
 
-export class MyInput extends StaticElement {
+export class SimplInput extends StaticElement {
   template(state, u) {
     return `
     <div class="mb-3" ${this.hidden ? 'style="display:none"' : ''}>
@@ -22,7 +22,7 @@ export class MyInput extends StaticElement {
   }
 
   change(value) {
-    MyModel.set(value.target.value, this.name, this.context);
+    SimplModel.set(value.target.value, this.name, this.context);
   }
 
   focus() {
@@ -33,4 +33,4 @@ export class MyInput extends StaticElement {
     this.required && !(this.disabled || this.hidden) ? 'required' : '';
   }
 }
-customElements.define('my-input', MyInput);
+customElements.define('simpl-input', SimplInput);

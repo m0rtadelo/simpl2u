@@ -1,5 +1,5 @@
 import { StaticElement } from '../core/static-element.js';
-import { MyModel } from '../models/my-model.js';
+import { SimplModel } from '../models/simpl-model.js';
 import { LanguageService } from '../services/language-service.js';
 import { ModalService } from '../services/modal-service.js';
 import { StorageService } from '../services/storage-service.js';
@@ -73,9 +73,9 @@ export class SimplCrud extends StaticElement {
 
   async doCreate(keepData = false) {
     if (!keepData)
-      MyModel.setContext('__simpl-modal', {});
+      SimplModel.setContext('__simpl-modal', {});
     if (await ModalService.open(this.#generateForm())) {
-      const modalData = MyModel.data()['__simpl-modal'];
+      const modalData = SimplModel.data()['__simpl-modal'];
       if (await this.#hasUnique(modalData, this.state.data)) {
         this.doCreate(true);
         return;
@@ -89,18 +89,18 @@ export class SimplCrud extends StaticElement {
 
   async doEdit(item) {
     const modified = JSON.parse(JSON.stringify(item));
-    MyModel.setContext('__simpl-modal', modified);
+    SimplModel.setContext('__simpl-modal', modified);
     if (await ModalService.open(this.#generateForm())) {
-      MyModel.setContext('__simpl-modal', item);
+      SimplModel.setContext('__simpl-modal', item);
       Object.keys(modified).forEach((key) => {
-        MyModel.set(modified[key], key, '__simpl-modal');
+        SimplModel.set(modified[key], key, '__simpl-modal');
       });
       this.#saveData();
     }
   }
 
   async doDetail(item) {
-    MyModel.setContext('__simpl-modal', item);
+    SimplModel.setContext('__simpl-modal', item);
     await ModalService.open(this.#generateForm(true), '', true)
   }
 
@@ -159,7 +159,7 @@ export class SimplCrud extends StaticElement {
       )
     );
     const fields = items.map((field) => {
-      return `<my-input class="${field.class}" context="__simpl-modal" name="${field.name}" ${field.required  && !(field.disabled || readonly) ? 'required' : ''} ${field.hidden ? 'hidden' : ''} ${field.disabled || readonly ? 'disabled' : ''}></my-input>`;
+      return `<simpl-input class="${field.class}" context="__simpl-modal" name="${field.name}" ${field.required  && !(field.disabled || readonly) ? 'required' : ''} ${field.hidden ? 'hidden' : ''} ${field.disabled || readonly ? 'disabled' : ''}></simpl-input>`;
     }).join('\n');
     return `<div class="row">${fields}</div>`;
   }

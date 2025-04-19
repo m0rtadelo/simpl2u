@@ -1,5 +1,5 @@
 import { StaticElement } from '../../../../framework/core/static-element.js';
-import { MyModel } from '../../../../framework/models/my-model.js';
+import { SimplModel } from '../../../../framework/models/simpl-model.js';
 import { ModalService } from '../../../../framework/services/modal-service.js';
 import { StorageService } from '../../../../framework/services/storage-service.js';
 export class MyForm extends StaticElement {
@@ -19,11 +19,11 @@ export class MyForm extends StaticElement {
         <div class="row">
           <div class="col-8">
             <div class="row">
-              <my-input class="col-12 col-md-6 col-lg-3" required id="name" name="name" context="${this.context}"></my-input>
-              <my-input class="col-12 col-md-6 col-lg-6" required name="surname" context="${this.context}"></my-input>
-              <my-input class="col-12 col-md-6 col-lg-3" name="birthday" context="${this.context}"></my-input>
-              <my-input class="col-12 col-md-6 col-lg-3" name="nickname" context="${this.context}"></my-input>
-              <my-input class="col-12 col-md-12 col-lg-9" name="company" context="${this.context}"></my-input>
+              <simpl-input class="col-12 col-md-6 col-lg-3" required id="name" name="name" context="${this.context}"></simpl-input>
+              <simpl-input class="col-12 col-md-6 col-lg-6" required name="surname" context="${this.context}"></simpl-input>
+              <simpl-input class="col-12 col-md-6 col-lg-3" name="birthday" context="${this.context}"></simpl-input>
+              <simpl-input class="col-12 col-md-6 col-lg-3" name="nickname" context="${this.context}"></simpl-input>
+              <simpl-input class="col-12 col-md-12 col-lg-9" name="company" context="${this.context}"></simpl-input>
               <simpl-select id="sex" context="${this.context}" required name="sex" items='[{"id":"", "text":""},{"id": "male", "text": "Male"},{"id": "female", "text": "Female"}]'></simpl-select>
             </div>
           </div>
@@ -55,7 +55,7 @@ export class MyForm extends StaticElement {
     if(!form.checkValidity())
       return;
     StorageService.saveApp(this.context, this.model);
-    console.log('Full data (all contexts)', MyModel.data());
+    console.log('Full data (all contexts)', SimplModel.data());
     ModalService.message('<pre>' + JSON.stringify(this.model, null, 2) + '</pre>', 'saved-data');
   }
 }
