@@ -25,7 +25,7 @@ export class SimplInput extends StaticElement {
   }
 
   #required() {
-    this.required && !(this.disabled || this.hidden) ? 'required' : '';
+    return this.required && !(this.disabled || this.hidden) ? 'required' : '';
   }
 }
 customElements.define('simpl-input', SimplInput);

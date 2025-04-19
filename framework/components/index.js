@@ -3,3 +3,4 @@ import './simpl-input.js';
 import './simpl-select.js';
 import './simpl-table.js';
 import './simpl-crud.js';
+import './simpl-date.js';

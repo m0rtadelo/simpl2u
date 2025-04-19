@@ -16,13 +16,13 @@ export class MyNavBar extends ReactiveElement {
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link ${ v === 'crud' ? 'active" aria-current="page"' : '"'}"" href="#crud">Contacts</a>
+              <a class="nav-link ${ v === 'crud' ? 'active" aria-current="page"' : '"'}"" href="#crud">${LanguageService.i18n('contacts')}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link ${ v === 'form1' ? 'active" aria-current="page"' : '"'}" href="#form1">Form 1</a>
+              <a class="nav-link ${ v === 'form1' ? 'active" aria-current="page"' : '"'}" href="#form1">${LanguageService.i18n('form1')}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link ${ v === 'form2' ? 'active" aria-current="page"' : '"'}" href="#form2">Form 2</a>
+              <a class="nav-link ${ v === 'form2' ? 'active" aria-current="page"' : '"'}" href="#form2">${LanguageService.i18n('form2')}</a>
             </li>
             <li class="nav-item">
               <a class="nav-link ${ v === 'services' ? 'active" aria-current="page"' : '"'}"" href="#services">Examples</a>

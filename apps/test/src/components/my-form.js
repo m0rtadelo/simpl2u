@@ -21,8 +21,8 @@ export class MyForm extends StaticElement {
           <div class="col-8">
             <div class="row">
               <simpl-input class="col-12 col-md-6 col-lg-3" required id="name" name="name" context="${this.context}"></simpl-input>
-              <simpl-input class="col-12 col-md-6 col-lg-6" required name="surname" context="${this.context}"></simpl-input>
-              <simpl-input class="col-12 col-md-6 col-lg-3" name="birthday" context="${this.context}"></simpl-input>
+              <simpl-input class="col-12 col-md-6 col-lg-5" required name="surname" context="${this.context}"></simpl-input>
+              <simpl-date class="col-12 col-md-6 col-lg-4" name="birthday" context="${this.context}"></simpl-date>
               <simpl-input class="col-12 col-md-6 col-lg-3" name="nickname" context="${this.context}"></simpl-input>
               <simpl-input class="col-12 col-md-12 col-lg-9" name="company" context="${this.context}"></simpl-input>
               <simpl-select id="sex" context="${this.context}" required name="sex" items='[{"id":"", "text":""},{"id": "male", "text": "Male"},{"id": "female", "text": "Female"}]'></simpl-select>

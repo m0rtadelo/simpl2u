@@ -12,6 +12,7 @@ export const words = {
   'Female': 'Dona',
   'sex': 'Sexe',
   'phone': 'Telèfon',
+  'phone2': 'Telèfon (alt.)',
   'email': 'Adreça electrònica',
   'twitter': 'Twitter / X',
   'address': 'Adreça postal',
@@ -19,4 +20,7 @@ export const words = {
   'filter-text': 'Escriu per a filtrar els resultats',
   'clear': 'Neteja',
   'required-fields': 'Camps obligatoris',
+  'contacts': 'Contactes',
+  'form1': 'Formulari 1',
+  'form2': 'Formulari 2',
 };

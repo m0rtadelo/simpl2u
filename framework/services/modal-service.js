@@ -89,6 +89,7 @@ export class ModalService {
               </div>              
             </div>
             <div class="modal-footer">
+            ${body.includes(' required ') ? `<span class="form-text"><span style="color: var(--bs-form-invalid-color)">* </span><span>${LanguageService.i18n('required-fields')}</span></span>` : ''}
             ${hideCancel ? '' : `<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">${LanguageService.i18n('cancel')}</button>`}
               <button type="submit" class="btn btn-primary" id="${this.modalId}_click_yes" >${LanguageService.i18n('accept')}</button>
             </div>

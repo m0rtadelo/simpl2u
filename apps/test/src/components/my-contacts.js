@@ -22,12 +22,14 @@ export class MyContacts extends StaticElement {
     setTimeout(() => {this.get('search').focus();}, 300);
     this.setEventListener('search', 'input', this.setFilter);
     this.setEventListener('button-clear', 'click', this.clearFilter);
-    this.get('contacts').setHeaders(['name', 'phone', 'email', 'twitter']);
+    this.get('contacts').setHeaders(['name', 'phone', 'email', 'twitter', 'instagram']);
     this.get('contacts').setForm([
       { name: 'id', disabled: true, hidden: true, unique: true, index: true },
       { name: 'name', required: true, class: 'col-12', unique: true },
       { name: 'address' },
       { name: 'phone', unique: true, class: 'col-6' },
+      { name: 'phone2', unique: true, class: 'col-6' },
+      { name: 'birthday', class: 'col-6', type: 'date' },
       { name: 'email', unique: true, class: 'col-6' },
       { name: 'twitter', unique: true, class: 'col-6'},
       { name: 'instagram', unique: true, class: 'col-6'}

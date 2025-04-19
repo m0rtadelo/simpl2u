@@ -12,6 +12,7 @@ import { StorageService } from '../services/storage-service.js';
  * @property {string} class - The CSS class of the field.
  * @property {boolean} unique - Indicates if the field must have a unique value.
  * @property {boolean} index - Indicates if the field is an index/key (new items will be created with the last index + 1).
+ * @property {string} type - The type of the field (e.g., 'input', 'date').
  */
 
 /**
@@ -216,7 +217,8 @@ export class SimplCrud extends StaticElement {
       )
     );
     const fields = items.map((field) => {
-      return `<simpl-input class="${field.class}" context="__simpl-modal" name="${field.name}" ${field.required  && !(field.disabled || readonly) ? 'required' : ''} ${field.hidden ? 'hidden' : ''} ${field.disabled || readonly ? 'disabled' : ''}></simpl-input>`;
+      const type = field.type || 'input';
+      return `<simpl-${type} class="${field.class}" context="__simpl-modal" ${field.required  && !(field.disabled || readonly) ? 'required' : ''} name="${field.name}" ${field.hidden ? 'hidden' : ''} ${field.disabled || readonly ? 'disabled' : ''}></simpl-${type}>`;
     }).join('\n');
     return `<div class="row">${fields}</div>`;
   }

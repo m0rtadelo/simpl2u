@@ -10,6 +10,7 @@ export const words = {
   'female': 'Mujer',
   'sex': 'Sexo',
   'phone': 'Teléfono',
+  'phone2': 'Teléfono (alt.)',
   'email': 'Dirección de correo electrónico',
   'twitter': 'Twitter',
   'address': 'Dirección postal',
@@ -17,4 +18,7 @@ export const words = {
   'filter-text': 'Escribe para filtrar resultados',
   'clear': 'Limpiar',
   'required-fields': 'Campos obligatorios',
+  'contacts': 'Contactos',
+  'form1': 'Formulario 1',
+  'form2': 'Formulario 2',
 };
