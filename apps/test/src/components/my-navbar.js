@@ -4,7 +4,7 @@ import { LanguageService } from '../../../../framework/services/language-service
 import { ThemeService } from '../../../../framework/services/theme-service.js';
 export class MyNavBar extends ReactiveElement {
   
-  template(state) {
+  template() {
     const v = RouterService.view;
     return `
     <nav class="navbar navbar-expand-md bg-body-tertiary">
@@ -31,10 +31,11 @@ export class MyNavBar extends ReactiveElement {
           <ul class="navbar-nav ms-auto">
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Language
+                ${LanguageService.lang}
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item ${LanguageService.lang === 'en' ? 'active' : ''}" id="lang_en" href="#">English</a></li>
+                <li><a class="dropdown-item ${LanguageService.lang === 'es' ? 'active' : ''}" id="lang_es" href="#">Español</a></li>
                 <li><a class="dropdown-item ${LanguageService.lang === 'ca' ? 'active' : ''}" id="lang_ca" href="#">Català</a></li>
               </ul>
             </li>
@@ -52,6 +53,7 @@ export class MyNavBar extends ReactiveElement {
   onReady() {
     this.setEventListener('lang_ca', 'click', () => LanguageService.lang = 'ca');
     this.setEventListener('lang_en', 'click', () => LanguageService.lang = 'en');
+    this.setEventListener('lang_es', 'click', () => LanguageService.lang = 'es');
     this.setEventListener('switchTheme', 'click', ThemeService.switchTheme);
   }
 }

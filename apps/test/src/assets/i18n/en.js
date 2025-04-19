@@ -15,5 +15,6 @@ export const words = {
   'address': 'Postal address',
   'instagram': 'Instagram',
   'filter-text': 'Type to filter results',
-  'clear': 'Clear'
+  'clear': 'Clear',
+  'required-fields': 'Required fields',
 };

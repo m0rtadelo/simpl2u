@@ -16,7 +16,7 @@ export class SimplTable extends ReactiveElement {
 
   template(state) {
     return `
-    <div class="card mt-4"><!--<div class="card-body">-->
+    <div class="card mt-4">
 <table class="table table-striped table-hover">
   <thead>
     <tr>
@@ -28,7 +28,7 @@ export class SimplTable extends ReactiveElement {
     ${this.renderTable()}
   </tbody>
 </table>
-</div><!--</div>-->
+</div>
         `;
   }
 
@@ -70,7 +70,7 @@ export class SimplTable extends ReactiveElement {
 
   addHeaderButtons() {
     let result = this.actions ? '<th class="text-end" style="width: 100px">' : '';
-    result += this.actions.includes('c') ? '<a href="#" id="create"><span  class="bi bi-plus-square me-2" title="Create"></span></a>' : '';
+    result += this.actions.includes('c') ? `<a href="#" id="create"><span  class="bi bi-plus-square me-2" title="${LanguageService.i18n('create')}"></span></a>` : '';
     result += this.actions ? '</th>' : '';
     return result;
   }
@@ -108,14 +108,14 @@ export class SimplTable extends ReactiveElement {
         output += '<tr>';
         output += headers.map((header) => `<td>${TextService.sanitize(item[header])}</td>`).join('\n');
         output += this.actions ? '<td class="text-end" style="width: 100px">' : '';
-        output += this.actions && this.actions.includes('r') ? `<a href="#" id="detail_${index}"><span  class="bi bi-eye me-2" title="Detail"></span></a>` : '';
-        output += this.actions && this.actions.includes('u') ? `<a href="#" id="edit_${index}"><span  class="bi bi-pencil me-2" title="Edit"></span></a>` : '';
-        output += this.actions && this.actions.includes('d') ? `<a href="#" id="delete_${index}"><span  class="bi bi-trash me-2" title="Delete"></span></a>` : '';
+        output += this.actions && this.actions.includes('r') ? `<a href="#" id="detail_${index}"><span  class="bi bi-eye me-2" title="${LanguageService.i18n('detail')}"></span></a>` : '';
+        output += this.actions && this.actions.includes('u') ? `<a href="#" id="edit_${index}"><span  class="bi bi-pencil me-2" title="${LanguageService.i18n('edit')}"></span></a>` : '';
+        output += this.actions && this.actions.includes('d') ? `<a href="#" id="delete_${index}"><span  class="bi bi-trash me-2" title="${LanguageService.i18n('delete')}"></span></a>` : '';
         output += this.actions ? '</td>' : '';
         output += '</tr>';
       }
     });
-    return output || '<tr><td colspan="100%" class="text-center">No data</td></tr>';
+    return output || `<tr><td colspan="100%" class="text-center">${LanguageService.i18n('no-data')}</td></tr>`;
   }
 }
 customElements.define('simpl-table', SimplTable);

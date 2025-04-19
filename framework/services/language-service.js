@@ -1,13 +1,14 @@
 import { StorageService } from './storage-service.js';
 import { words as ca } from '../assets/i18n/ca.js';
 import { words as en } from '../assets/i18n/en.js';
+import { words as es } from '../assets/i18n/es.js';
 export class LanguageService {
   static #lang = StorageService.loadApp(('lang')) || 'en';
   static #subscribers = new Set(); // Store all subscriber functions
   static #languages = {};
 
   static {
-    LanguageService.#languages = { ca, en };
+    LanguageService.#languages = { ca, en, es };
     document.documentElement.setAttribute('lang', this.#lang);
   }
 
@@ -44,7 +45,13 @@ export class LanguageService {
     });
   }
 
-  static i18n(key) {
-    return LanguageService.#languages?.[LanguageService.#lang]?.[key] || key;
+  static i18n(key, params = {}) {
+    let base = LanguageService.#languages?.[LanguageService.#lang]?.[key] || key;
+    if (params) {
+      Object.keys(params).forEach((param) => {
+        base = base.replace(`{{${param}}}`, params[param]);
+      });
+    }
+    return base;
   }
 }

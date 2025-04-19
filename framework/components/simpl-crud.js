@@ -94,7 +94,7 @@ export class SimplCrud extends StaticElement {
   async doCreate(keepData = false) {
     if (!keepData)
       SimplModel.setContext('__simpl-modal', {});
-    if (await ModalService.open(this.#generateForm())) {
+    if (await ModalService.open(this.#generateForm(), 'new-record' )) {
       const modalData = SimplModel.data()['__simpl-modal'];
       if (await this.#hasUnique(modalData, this.state.data)) {
         this.doCreate(true);
@@ -115,7 +115,7 @@ export class SimplCrud extends StaticElement {
   async doEdit(item) {
     const modified = JSON.parse(JSON.stringify(item));
     SimplModel.setContext('__simpl-modal', modified);
-    if (await ModalService.open(this.#generateForm())) {
+    if (await ModalService.open(this.#generateForm(), 'edit-record')) {
       SimplModel.setContext('__simpl-modal', item);
       Object.keys(modified).forEach((key) => {
         SimplModel.set(modified[key], key, '__simpl-modal');
@@ -131,7 +131,7 @@ export class SimplCrud extends StaticElement {
    */
   async doDetail(item) {
     SimplModel.setContext('__simpl-modal', item);
-    await ModalService.open(this.#generateForm(true), '', true)
+    await ModalService.open(this.#generateForm(true), 'detail-record', true)
   }
 
   /**
@@ -140,7 +140,7 @@ export class SimplCrud extends StaticElement {
    * @param {object} item - The item to delete.
    */
   async doDelete(item) {
-    if (await ModalService.confirm('Do you want to delete this item?')) {
+    if (await ModalService.confirm('delete-record-confirm', 'delete-record')) {
       const result = [];
       this.state.data.forEach((reg) => {
         if (reg !== item) {
@@ -177,7 +177,7 @@ export class SimplCrud extends StaticElement {
     for (const field of uniqueFields) {
       const existingItem = items?.find((item) => !!item[field.name] && item[field.name] === data[field.name]);
       if (existingItem) {
-        await ModalService.message(`The field ${LanguageService.i18n(field.name)} must be unique`, 'Error');
+        await ModalService.message(LanguageService.i18n('error-unique', { field: LanguageService.i18n(field.name) }), 'Error');
         return true;
       }
     }

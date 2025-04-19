@@ -1,5 +1,6 @@
 import { StaticElement } from '../../../../framework/core/static-element.js';
 import { SimplModel } from '../../../../framework/models/simpl-model.js';
+import { LanguageService } from '../../../../framework/services/language-service.js';
 import { ModalService } from '../../../../framework/services/modal-service.js';
 import { StorageService } from '../../../../framework/services/storage-service.js';
 export class MyForm extends StaticElement {
@@ -33,7 +34,7 @@ export class MyForm extends StaticElement {
         </div>
         <div class="row align-items-center mt-md-4">
           <div class="col-12 col-md-6 col-lg-9 text-md-end form-text">
-          <span style="color: var(--bs-form-invalid-color)">* </span><span>Camps obligatoris</span>
+          <span style="color: var(--bs-form-invalid-color)">* </span><span>${LanguageService.i18n('required-fields')}</span>
           </div>
           <div class="col-12 col-md-6 col-lg-3">
             <button class="btn btn-primary col-12" id="button" type="submit">Save model</button>

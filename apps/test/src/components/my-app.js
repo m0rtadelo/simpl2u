@@ -3,12 +3,13 @@ import { LanguageService } from '../../../../framework/services/language-service
 import { RouterService } from '../../../../framework/services/router-service.js';
 import { words as ca } from '../assets/i18n/ca.js';
 import { words as en } from '../assets/i18n/en.js';
+import { words as es } from '../assets/i18n/es.js';
 
 export class MyApp extends StaticElement {
 
   constructor() {
     super();
-    LanguageService.set({ ca, en });
+    LanguageService.set({ ca, en, es });
     RouterService.view = 'crud';
   }
 

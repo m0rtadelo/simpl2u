@@ -17,5 +17,6 @@ export const words = {
   'address': 'Adreça postal',
   'instagram': 'Instagram',
   'filter-text': 'Escriu per a filtrar els resultats',
-  'clear': 'Neteja'
+  'clear': 'Neteja',
+  'required-fields': 'Camps obligatoris',
 };
