@@ -4,7 +4,7 @@ import { LanguageService } from '../../../../framework/services/language-service
 import { ThemeService } from '../../../../framework/services/theme-service.js';
 export class MyNavBar extends ReactiveElement {
   
-  template(state, u) {
+  template(state) {
     const v = RouterService.view;
     return `
     <nav class="navbar navbar-expand-md bg-body-tertiary">

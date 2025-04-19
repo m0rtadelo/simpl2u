@@ -1,4 +1,5 @@
 import { StaticElement } from '../core/static-element.js';
+import { LanguageService } from '../services/language-service.js';
 
 export class SimplSelect extends StaticElement {
   constructor() {
@@ -9,13 +10,13 @@ export class SimplSelect extends StaticElement {
     }
   }
 
-  template(state, u) {
+  template(state) {
     return `
 <div class="mb-3">
-<label for="${this.name}" class="form-label col-12">${u.i18n(this.label)}${this.required ? ' <span style="color: var(--bs-form-invalid-color)">*</span>' : ''}</label>
+<label for="${this.name}" class="form-label col-12">${LanguageService.i18n(this.label)}${this.required ? ' <span style="color: var(--bs-form-invalid-color)">*</span>' : ''}</label>
 <select class="form-select" ${this.required ? 'required' : ''} id="${this.name}" aria-label="${this.label}">
 ${ this.items.map(item => `
-  <option value="${item.id}" ${state[this.name] === item.id ? 'selected' : ''}>${u.i18n(item.text)}</option>
+  <option value="${item.id}" ${state[this.name] === item.id ? 'selected' : ''}>${LanguageService.i18n(item.text)}</option>
 `) }
 </select>
 </div>

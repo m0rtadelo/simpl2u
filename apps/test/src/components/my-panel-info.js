@@ -1,17 +1,19 @@
 import { ReactiveElement } from '../../../../framework/core/reactive-element.js';
+import { LanguageService } from '../../../../framework/services/language-service.js';
+import { TextService } from '../../../../framework/services/text-service.js';
 
 export class MyPanelInfo extends ReactiveElement {
   text = this.getAttribute('text');
-  template(state, u) {
+  template(state) {
     return `
     <div class="card mt-4">
       <div class="card-body">
-        <div><small>${u.i18n('name')}: ${u.sanitize(state.name || '')}</small></div>
-        <div><small>${u.i18n('surname')}: ${u.sanitize(state.surname || '')}</small></div>
-        <div><small>${u.i18n('birthday')}: ${u.sanitize(state.birthday || '')}</small></div>
-        <div><small>${u.i18n('nickname')}: ${u.sanitize(state.nickname || '')}</small></div>
-        <div><small>${u.i18n('company')}: ${u.sanitize(state.company || '')}</small></div>
-        <div><small>${u.i18n('sex')}: ${u.i18n(state.sex || '')}</small></div>
+        <div><small>${LanguageService.i18n('name')}: ${TextService.sanitize(state.name || '')}</small></div>
+        <div><small>${LanguageService.i18n('surname')}: ${TextService.sanitize(state.surname || '')}</small></div>
+        <div><small>${LanguageService.i18n('birthday')}: ${TextService.sanitize(state.birthday || '')}</small></div>
+        <div><small>${LanguageService.i18n('nickname')}: ${TextService.sanitize(state.nickname || '')}</small></div>
+        <div><small>${LanguageService.i18n('company')}: ${TextService.sanitize(state.company || '')}</small></div>
+        <div><small>${LanguageService.i18n('sex')}: ${LanguageService.i18n(state.sex || '')}</small></div>
       </div>
     </div>
         `;

@@ -14,11 +14,6 @@ export class Element extends HTMLElement {
   _items;
 
   static #done; 
-  utils = {
-    i18n: LanguageService.i18n,
-    sanitize: (value) => this.sanitize(value),
-    unaccent: (value) => this.unaccent(value),
-  };
 
   constructor() {
     super();
@@ -75,10 +70,9 @@ export class Element extends HTMLElement {
   /**
    * Callback to update the template when state or languages changes
    * @param {object} state of the model in context
-   * @param {object} utils with helpers (i18n, sanitize, unaccent)
    * @returns the updated template
    */
-  template(state, utils) {
+  template(state) {
     return '';
   }
 
@@ -93,7 +87,7 @@ export class Element extends HTMLElement {
    * NOTE: Listeners will be destroyed and should be added again
    */
   render() {
-    this.innerHTML = this.template(this.state, this.utils);
+    this.innerHTML = this.template(this.state);
 
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (() => {
@@ -147,16 +141,5 @@ export class Element extends HTMLElement {
    */
   setModel(id, value) {
     SimplModel.set(value, id, this.context);
-  }
-
-  unaccent(word) {
-    return word
-      .normalize("NFD") // Normalize to decomposed form
-      .replace(/[\u0300-\u036f]/g, "") // Remove diacritic marks
-      .toLowerCase(); // Convert to lowercase
-  }
-  
-  sanitize(value) {
-    return (value || '').toString().replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 }

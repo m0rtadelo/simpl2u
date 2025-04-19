@@ -31,7 +31,7 @@ export class ReactiveElement extends Element {
   }
 
   update() {
-    const templateHtml = this.template(this._reactiveState, this.utils);
+    const templateHtml = this.template(this._reactiveState);
     const container = document.createElement('div');
     container.innerHTML = templateHtml;
     this.replaceChildren(...container.childNodes);
