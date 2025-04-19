@@ -22,7 +22,7 @@ export class Element extends HTMLElement {
       LanguageService.subscribe(() => {
         this.refesh();
       });
-      window.electronAPI.getLocale().then((result) => {
+      window.api.getLocale().then((result) => {
         const userLang = StorageService.loadApp('lang');
         if (!userLang)
           LanguageService.lang = result || 'en';
