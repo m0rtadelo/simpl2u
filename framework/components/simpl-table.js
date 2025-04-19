@@ -68,7 +68,10 @@ export class SimplTable extends ReactiveElement {
   }
 
   addHeaderButtons() {
-    return this.actions.includes('c') ? '<th class="text-end" style="width: 100px"><a href="#" id="create"><span  class="bi bi-plus-square me-2" title="Create"></span></a></th>' : '';
+    let result = this.actions ? '<th class="text-end" style="width: 100px">' : '';
+    result += this.actions.includes('c') ? '<a href="#" id="create"><span  class="bi bi-plus-square me-2" title="Create"></span></a>' : '';
+    result += this.actions ? '</th>' : '';
+    return result;
   }
 
   /**

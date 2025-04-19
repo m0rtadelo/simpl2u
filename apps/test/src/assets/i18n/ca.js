@@ -11,4 +11,11 @@ export const words = {
   'female': 'Dona',
   'Female': 'Dona',
   'sex': 'Sexe',
+  'phone': 'Telèfon',
+  'email': 'Adreça electrònica',
+  'twitter': 'Twitter / X',
+  'address': 'Adreça postal',
+  'instagram': 'Instagram',
+  'filter-text': 'Escriu per a filtrar els resultats',
+  'clear': 'Neteja'
 };

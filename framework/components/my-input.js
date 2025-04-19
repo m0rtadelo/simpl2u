@@ -6,7 +6,7 @@ export class MyInput extends StaticElement {
     return `
     <div class="mb-3" ${this.hidden ? 'style="display:none"' : ''}>
       <label for="${this.name}" class="form-label col-12">${u.i18n(this.label)}${this.required ? ' <span style="color: var(--bs-form-invalid-color)">*</span>' : ''}</label>
-      <input autofocus="true" id="${this.name}" ${this.required ? 'required' : ''} ${this.disabled ? 'disabled' : ''} class="form-control col-12" type="text" value="${state[this.name] || ''}"></input>
+      <input autofocus="true" id="${this.name}" ${this.#required()} ${this.disabled ? 'disabled' : ''} class="form-control col-12" type="text" value="${state[this.name] || ''}"></input>
       <!--<div class="invalid-feedback">
         ${u.i18n('field-required')}
       </div>
@@ -27,6 +27,10 @@ export class MyInput extends StaticElement {
 
   focus() {
     document.querySelector('input#' + this.name).focus();
+  }
+
+  #required() {
+    this.required && !(this.disabled || this.hidden) ? 'required' : '';
   }
 }
 customElements.define('my-input', MyInput);

@@ -18,7 +18,7 @@ function createWindow() {
   win.loadFile('index.html');
   win.autoHideMenuBar = true;
   win.setMenuBarVisibility(false);
-  win.webContents.openDevTools();
+  //win.webContents.openDevTools();
 }
 
 app.whenReady().then(createWindow);

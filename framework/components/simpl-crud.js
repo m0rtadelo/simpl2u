@@ -14,6 +14,7 @@ import { StorageService } from '../services/storage-service.js';
  * @property {boolean} index - If the field is index/key (new items will be created with last index + 1)  
  */
 export class SimplCrud extends StaticElement {
+  actions = this.getAttribute('actions') || 'crud';
   headers = [];
   form = [];
 
@@ -25,12 +26,11 @@ export class SimplCrud extends StaticElement {
     if (!this.model.data) {
       this.model.data = [];
     }
-    //if ()
   }
 
   template() {
     return `
-    <simpl-table id="simpl-table" actions="crud" name="${this.name}" context="${this.context}"></simpl-table>
+    <simpl-table id="simpl-table" actions="${this.actions}" name="${this.name || 'data'}" context="${this.context}"></simpl-table>
     `;
   }
 
@@ -127,7 +127,7 @@ export class SimplCrud extends StaticElement {
   async #hasUnique(data, items) {
     const uniqueFields = this.form.filter((field) => field.unique);
     for (const field of uniqueFields) {
-      const existingItem = items?.find((item) => item[field.name] === data[field.name]);
+      const existingItem = items?.find((item) => !!item[field.name] && item[field.name] === data[field.name]);
       if (existingItem) {
         await ModalService.message(`The field ${LanguageService.i18n(field.name)} must be unique`, 'Error');
         return true;

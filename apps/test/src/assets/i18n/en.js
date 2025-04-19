@@ -8,5 +8,12 @@ export const words = {
   'modal.prompt': 'Enter your text:',
   'male': 'Male',
   'female': 'Female',
-  'sex': 'Sex'
+  'sex': 'Sex',
+  'phone': 'Phone',
+  'email': 'e-mail address',
+  'twitter': 'Twitter',
+  'address': 'Postal address',
+  'instagram': 'Instagram',
+  'filter-text': 'Type to filter results',
+  'clear': 'Clear'
 };

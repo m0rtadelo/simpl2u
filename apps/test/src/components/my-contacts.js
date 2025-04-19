@@ -1,4 +1,5 @@
 import { StaticElement } from '../../../../framework/core/static-element.js';
+import { LanguageService } from '../../../../framework/services/language-service.js';
 
 export class MyContacts extends StaticElement {
 
@@ -10,10 +11,10 @@ export class MyContacts extends StaticElement {
   template() {
     return `
     <div class="input-group mt-4">
-      <input type="text" id="search" name="filter" autofocus="true" class="form-control" value="${this.model['filter'] || ''}" placeholder="Type to filter items" aria-label="Type to filter items" aria-describedby="button-clear">
-      <button class="btn btn-outline-secondary" type="button" id="button-clear">Clear</button>
+      <input type="text" id="search" name="filter" autofocus="true" class="form-control" value="${this.model['filter'] || ''}" placeholder="${LanguageService.i18n('filter-text')}" aria-label="${LanguageService.i18n('filter-text')}" aria-describedby="button-clear">
+      <button class="btn btn-outline-secondary" type="button" id="button-clear">${LanguageService.i18n('clear')}</button>
     </div>
-    <simpl-crud id="contacts" name="data" context="${this.context}"></simpl-crud>
+    <simpl-crud id="contacts" context="${this.context}"></simpl-crud>
     `;
   }
 
@@ -26,10 +27,10 @@ export class MyContacts extends StaticElement {
       { name: 'id', disabled: true, hidden: true, unique: true, index: true },
       { name: 'name', required: true, class: 'col-12', unique: true },
       { name: 'address' },
-      { name: 'phone', class: 'col-6' },
-      { name: 'email', class: 'col-6' },
-      { name: 'twitter', class: 'col-6'},
-      { name: 'instagram', class: 'col-6'}
+      { name: 'phone', unique: true, class: 'col-6' },
+      { name: 'email', unique: true, class: 'col-6' },
+      { name: 'twitter', unique: true, class: 'col-6'},
+      { name: 'instagram', unique: true, class: 'col-6'}
     ]);
   }
 
